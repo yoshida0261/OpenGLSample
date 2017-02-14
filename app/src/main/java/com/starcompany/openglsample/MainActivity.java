@@ -43,19 +43,18 @@ public class MainActivity extends AppCompatActivity {
         this.mRetryButton = new Button(this);
         this.mRetryButton.setText("Retry");
         hideRetryButton();//非表示にする
-        this.mRetryButton.setVisibility(View.INVISIBLE);
         addContentView(mRetryButton, params);
         //イベントの追加
 
-        /*
+
         this.mRetryButton.setOnClickListener(new Button.OnClickListener(){
             @Override
-            publi void onClick(View v){
+            public void onClick(View v){
                 hideRetryButton();
                 mRenderer.startNewGame();
             }
         });
-        */
+
 
         //　保存した状態に戻す
         if (savedInstanceState != null) {
@@ -71,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
     //リトライボタンを表示する
 
     public void showRetryButton() {
-       // mRetryButton.setVisibility(View.VISIBLE);
+       mRetryButton.setVisibility(View.VISIBLE);
     }
 
     //リトライボタンを非表示にする
     public void hideRetryButton() {
-        //mRetryButton.setVisibility(View.INVISIBLE);
+        mRetryButton.setVisibility(View.INVISIBLE);
     }
 
 

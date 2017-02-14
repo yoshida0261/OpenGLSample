@@ -110,16 +110,21 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
         // 背景を描画する
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, mBgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+        /*
         // パーティクルを描画します
         mParticleSystem.update();
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
         mParticleSystem.draw(gl, mParticleTexture);
+        */
+
         // 標的を描画します
         for (int i = 0; i < TARGET_NUM; i++) {
             targets[i].draw(gl, mTargetTexture);
         }
         gl.glDisable(GL10.GL_BLEND);
+
+        /*
         //得点を描画します
         GraphicUtil.drawNumbers(gl, -0.5f, 1.25f, 0.125f, 0.125f, mNumberTexture, mScore, 8, 1.0f, 1.0f, 1.0f, 1.0f);
         //残り時間を描画します
@@ -127,7 +132,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         //ゲームオーバーテクスチャを描画します。
         if (mGameOverFlag) {
             GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, mGameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
-        }
+        }*/
     }
 
     @Override
@@ -154,11 +159,12 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
             Log.e(getClass().toString(), "load texture error! fly");
         }
 
-        /*
+
         this.mBgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
         if (mBgTexture == 0) {
             Log.e(getClass().toString(), "load texture error! circuit");
         }
+        /*
         this.mNumberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number_texture);
         if (mNumberTexture == 0) {
             Log.e(getClass().toString(), "load texture error! number_texture");
