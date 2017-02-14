@@ -2,15 +2,15 @@ package com.starcompany.openglsample;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Enemey {
-    private static final String TAG = Enemey.class.getSimpleName();
+public class Enemy {
+    private static final String TAG = Enemy.class.getSimpleName();
     public float mAngle;//標的の角度
     public float mX, mY;//標的の位置
     public float mSize;//標的のサイズ
     public float mSpeed;//標的の移動速度
     public float mTurnAngle;//標的の旋回角度
 
-    public Enemey (float x, float y, float angle, float size, float speed, float turnAngle) {
+    public Enemy(float x, float y, float angle, float size, float speed, float turnAngle) {
         this.mX = x;
         this.mY = y;
         this.mAngle = angle;

@@ -14,20 +14,22 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DWRenderer implements  GLSurfaceView.Renderer{
     private static final String TAG = DWRenderer.class.getSimpleName();
-    public static final int TARGET_NUM = 10;//標的の数
-    private static final int GAME_INTERVAL = 60;//制限時間は60秒
-
-    private int mScore;//得点
+    public static final int TARGET_NUM = 10;
+    private static final int GAME_INTERVAL = 60;
+    private int score;
+    
 
     // コンテキスト
-    private Context mContext;
+    private Context context;
 
-    private int mWidth;
-    private int mHeight;
+    private int width;
+    private int height;
+    
 
     // テクスチャ
-    private int mBgTexture;
-    private int mTargetTexture;//標的用テクスチャ
+    private int bgTexture;
+    
+    private int enemyTexture;
     private int mNumberTexture;
     private int mGameOverTexture;//ゲームオーバー用テクスチャ
     private int mParticleTexture;//パーティクル用テクスチャ
@@ -35,7 +37,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     private ParticleSystem mParticleSystem;//パーティクルシステム
 
     //標的
-    private Enemey[] mTargets = new Enemey[TARGET_NUM];
+    private Enemy[] mTargets = new Enemy[TARGET_NUM];
 
     private long mStartTime;//開始時間
     private boolean mGameOverFlag;//ゲームオーバーであるか
@@ -45,7 +47,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     //private MySe mSe;
 
     public DWRenderer(Context context) {
-        this.mContext = context;
+        this.context = context;
         this.mParticleSystem = new ParticleSystem(300, 30);//生成します
 
         startNewGame();
@@ -61,10 +63,10 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
             float size = rand.nextFloat() * 0.25f + 0.25f;
             float speed = rand.nextFloat() * 0.01f + 0.01f;
             float turnAngle = rand.nextFloat() * 4.0f - 2.0f;
-            mTargets[i] = new Enemey(x, y, angle, size, speed, turnAngle);
+            mTargets[i] = new Enemy(x, y, angle, size, speed, turnAngle);
         }
 
-        this.mScore = 0;
+        this.score = 0;
         this.mStartTime = System.currentTimeMillis();//開始時間を保持します
         this.mGameOverFlag = false;//ゲームオーバー状態ではない
     }
@@ -89,7 +91,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
             }
         }
         Random rand = DWGlobal.rand;
-        Enemey[] targets = mTargets;
+        Enemy[] targets = mTargets;
         // 全ての標的を1つずつ動かします
         for (int i = 0; i < TARGET_NUM; i++) {
             // ランダムなタイミングで方向転換するようにします
@@ -109,7 +111,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         }
 
         // 背景を描画する
-        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, mBgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         /*
         // パーティクルを描画します
         mParticleSystem.update();
@@ -120,7 +122,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
         // 標的を描画します
         for (int i = 0; i < TARGET_NUM; i++) {
-            targets[i].draw(gl, mTargetTexture);
+            targets[i].draw(gl, enemyTexture);
         }
         gl.glDisable(GL10.GL_BLEND);
 
@@ -137,7 +139,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        gl.glViewport(0, 0, mWidth, mHeight);
+        gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
         gl.glOrthof(-1.0f, 1.0f, -1.5f, 1.5f, 0.5f, -0.5f);
@@ -152,16 +154,16 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
     //テクスチャを読み込むメソッド
     private void loadTextures(GL10 gl) {
-        Resources res = mContext.getResources();
+        Resources res = context.getResources();
         // TODO テクスチャの設定
-        this.mTargetTexture = GraphicUtil.loadTexture(gl, res, R.drawable.fly);
-        if (mTargetTexture == 0) {
+        this.enemyTexture = GraphicUtil.loadTexture(gl, res, R.drawable.fly);
+        if (enemyTexture == 0) {
             Log.e(getClass().toString(), "load texture error! fly");
         }
 
 
-        this.mBgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
-        if (mBgTexture == 0) {
+        this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
+        if (bgTexture == 0) {
             Log.e(getClass().toString(), "load texture error! circuit");
         }
         /*
@@ -182,8 +184,8 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        this.mWidth = width;
-        this.mHeight = height;
+        this.width = width;
+        this.height = height;
 
         DWGlobal.gl = gl;//GLコンテキストを保持する
 
@@ -199,7 +201,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     //画面がタッチされたときに呼ばれるメソッド
     public void touched(float x, float y) {
         Log.i(getClass().toString(), String.format("touched! x = %f, y = %f", x, y));
-        Enemey[] targets = mTargets;
+        Enemy[] targets = mTargets;
         Random rand = DWGlobal.rand;
 
         if (!mGameOverFlag) {
@@ -217,8 +219,8 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
                     float theta = (float) DWGlobal.rand.nextInt(360) / 180.0f * (float) Math.PI;// 適当な位置
                     targets[i].mX = (float) Math.cos(theta) * dist;
                     targets[i].mY = (float) Math.sin(theta) * dist;
-                    mScore += 100;// 100点加算します
-                    Log.i(getClass().toString(), "score = " + mScore);
+                    score += 100;// 100点加算します
+                    Log.i(getClass().toString(), "score = " + score);
 
                 }
             }
@@ -234,11 +236,11 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     }
 
     public int getScore() {
-        return mScore;
+        return score;
     }
 
     public void setScore(int score) {
-        mScore = score;
+        score = score;
     }
 }
  
