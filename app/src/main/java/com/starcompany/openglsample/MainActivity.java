@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button mRetryButton;//リトライボタン
-    private DWRenderer mRenderer;
+    private DroidWars mRenderer;
     private long mPauseTime = 0L;
 
     @Override
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         //インスタンスを保持させる
         DWGlobal.mainActivity = this;
 
-        this.mRenderer = new DWRenderer(this);
+        this.mRenderer = new DroidWars(this);
         DWGLSurfaceView glSurfaceView = new DWGLSurfaceView(this);
         glSurfaceView.setRenderer(mRenderer);
         setContentView(glSurfaceView);

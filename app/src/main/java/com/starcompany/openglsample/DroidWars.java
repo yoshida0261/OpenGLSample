@@ -12,8 +12,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 
-public class DWRenderer implements  GLSurfaceView.Renderer{
-    private static final String TAG = DWRenderer.class.getSimpleName();
+public class DroidWars implements  GLSurfaceView.Renderer{
+    private static final String TAG = DroidWars.class.getSimpleName();
     public static final int TARGET_NUM = 10;
     private static final int GAME_INTERVAL = 60;
     private int score;
@@ -34,26 +34,24 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     private int mGameOverTexture;//ゲームオーバー用テクスチャ
     private int mParticleTexture;//パーティクル用テクスチャ
 
-    private ParticleSystem mParticleSystem;//パーティクルシステム
+    private ParticleSystem particleSystem;
+    private Enemy[] targets = new Enemy[TARGET_NUM];
 
-    //標的
-    private Enemy[] mTargets = new Enemy[TARGET_NUM];
-
-    private long mStartTime;//開始時間
-    private boolean mGameOverFlag;//ゲームオーバーであるか
-
-    private Handler mHandler = new Handler();//ハンドラー
+    private long startTime;
+    private boolean gameOverFlag;
+    private Handler handler = new Handler();//ハンドラー
 
     //private MySe mSe;
 
-    public DWRenderer(Context context) {
+    public DroidWars(Context context) {
         this.context = context;
-        this.mParticleSystem = new ParticleSystem(300, 30);//生成します
+        this.particleSystem = new ParticleSystem(300, 30);//生成します
 
         startNewGame();
     }
 
-    public void startNewGame() {
+    private void InitializeEnemy()
+    {
         Random rand = DWGlobal.rand;
         //標的の状態を初期化します
         for (int i = 0; i < TARGET_NUM; i++) {
@@ -63,25 +61,54 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
             float size = rand.nextFloat() * 0.25f + 0.25f;
             float speed = rand.nextFloat() * 0.01f + 0.01f;
             float turnAngle = rand.nextFloat() * 4.0f - 2.0f;
-            mTargets[i] = new Enemy(x, y, angle, size, speed, turnAngle);
+            targets[i] = new Enemy(x, y, angle, size, speed, turnAngle);
         }
 
+    }
+
+    public void startNewGame() {
+
+        InitializeEnemy();
         this.score = 0;
-        this.mStartTime = System.currentTimeMillis();//開始時間を保持します
-        this.mGameOverFlag = false;//ゲームオーバー状態ではない
+        this.startTime = System.currentTimeMillis();
+        this.gameOverFlag = false;
+    }
+
+    private void moveEnemy()
+    {
+        Random rand = DWGlobal.rand;
+        Enemy[] targets = this.targets;
+        // 全ての標的を1つずつ動かします
+        for (int i = 0; i < TARGET_NUM; i++) {
+            // ランダムなタイミングで方向転換するようにします
+            if (rand.nextInt(100) == 0) {// 100回に1回の確率で方向転換させます
+                // 旋回する角度を -2.0〜2.0の間でランダムに設定します。
+                targets[i].turnAngle = rand.nextFloat() * 4.0f - 2.0f;
+            }
+
+            // ここで標的を旋回させます
+            targets[i].angle = targets[i].angle + targets[i].turnAngle;
+            // 標的を動かします
+            targets[i].move();
+            // パーティクルを使って軌跡を描画します
+            float moveX = (rand.nextFloat() - 0.5f) * 0.01f;
+            float moveY = (rand.nextFloat() - 0.5f) * 0.01f;
+            particleSystem.add(targets[i].x, targets[i].y, 0.1f, moveX, moveY);
+        }
+
     }
 
     //描画を行う部分を記述するメソッドを追加する
     public void renderMain(GL10 gl) {
         // 経過時間を計算する
-        int passedTime = (int) (System.currentTimeMillis() - mStartTime) / 1000;
+        int passedTime = (int) (System.currentTimeMillis() - startTime) / 1000;
         int remainTime = GAME_INTERVAL - passedTime;// 　残り時間を計算する
         if (remainTime <= 0) {
             remainTime = 0;// 残り時間がマイナスにならないようにする
-            if (!mGameOverFlag) {
-                mGameOverFlag = true;// ゲームオーバー状態にする
+            if (!gameOverFlag) {
+                gameOverFlag = true;// ゲームオーバー状態にする
                 // Global.mainActivity.showRetryButton()をUIスレッド上で実行する
-                mHandler.post(new Runnable() {
+                handler.post(new Runnable() {
 
                     @Override
                     public void run() {
@@ -90,27 +117,10 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
                 });
             }
         }
-        Random rand = DWGlobal.rand;
-        Enemy[] targets = mTargets;
-        // 全ての標的を1つずつ動かします
-        for (int i = 0; i < TARGET_NUM; i++) {
-            // ランダムなタイミングで方向転換するようにします
-            if (rand.nextInt(100) == 0) {// 100回に1回の確率で方向転換させます
-                // 旋回する角度を -2.0〜2.0の間でランダムに設定します。
-                targets[i].mTurnAngle = rand.nextFloat() * 4.0f - 2.0f;
-            }
 
-            // ここで標的を旋回させます
-            targets[i].mAngle = targets[i].mAngle + targets[i].mTurnAngle;
-            // 標的を動かします
-            targets[i].move();
-            // パーティクルを使って軌跡を描画します
-            float moveX = (rand.nextFloat() - 0.5f) * 0.01f;
-            float moveY = (rand.nextFloat() - 0.5f) * 0.01f;
-            mParticleSystem.add(targets[i].mX, targets[i].mY, 0.1f, moveX, moveY);
-        }
+        moveEnemy();
 
-        // 背景を描画する
+        //背景
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         /*
         // パーティクルを描画します
@@ -186,10 +196,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         this.width = width;
         this.height = height;
-
-        DWGlobal.gl = gl;//GLコンテキストを保持する
-
-        //テクスチャをロードする
+        DWGlobal.gl = gl;
         loadTextures(gl);
     }
 
@@ -201,10 +208,10 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     //画面がタッチされたときに呼ばれるメソッド
     public void touched(float x, float y) {
         Log.i(getClass().toString(), String.format("touched! x = %f, y = %f", x, y));
-        Enemy[] targets = mTargets;
+        Enemy[] targets = this.targets;
         Random rand = DWGlobal.rand;
 
-        if (!mGameOverFlag) {
+        if (!gameOverFlag) {
             // すべての標的との当たり判定をします
             for (int i = 0; i < TARGET_NUM; i++) {
                 if (targets[i].isPointInside(x, y)) {
@@ -212,13 +219,13 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
                     for (int j = 0; j < 40; j++) {
                         float moveX = (rand.nextFloat() - 0.5f) * 0.05f;
                         float moveY = (rand.nextFloat() - 0.5f) * 0.05f;
-                        mParticleSystem.add(targets[i].mX, targets[i].mY, 0.2f, moveX, moveY);
+                        particleSystem.add(targets[i].x, targets[i].y, 0.2f, moveX, moveY);
                     }
                     // 標的をランダムな位置に移動します
                     float dist = 2.0f;// 画面中央から2.0fはなれた円周上の点
                     float theta = (float) DWGlobal.rand.nextInt(360) / 180.0f * (float) Math.PI;// 適当な位置
-                    targets[i].mX = (float) Math.cos(theta) * dist;
-                    targets[i].mY = (float) Math.sin(theta) * dist;
+                    targets[i].x = (float) Math.cos(theta) * dist;
+                    targets[i].y = (float) Math.sin(theta) * dist;
                     score += 100;// 100点加算します
                     Log.i(getClass().toString(), "score = " + score);
 
@@ -228,11 +235,11 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     }
 
     public void subtractPausedTime(long pausedTime) {
-        mStartTime += pausedTime;
+        startTime += pausedTime;
     }
 
     public long getStartTime() {
-        return mStartTime;
+        return startTime;
     }
 
     public int getScore() {

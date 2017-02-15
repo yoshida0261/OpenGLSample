@@ -11,7 +11,7 @@ public class DWGLSurfaceView extends GLSurfaceView{
     private float height;
 
     //MyRendererを保持する
-    private DWRenderer mMyRenderer;
+    private DroidWars mMyRenderer;
 
     public DWGLSurfaceView(Context context) {
         super(context);
@@ -21,7 +21,7 @@ public class DWGLSurfaceView extends GLSurfaceView{
     @Override
     public void setRenderer(Renderer renderer) {
         super.setRenderer(renderer);
-        this.mMyRenderer = (DWRenderer)renderer;
+        this.mMyRenderer = (DroidWars)renderer;
     }
 
     @Override
