@@ -6,6 +6,9 @@ import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.Log;
 
+import com.starcompany.openglsample.Charactor.Enemy;
+import com.starcompany.openglsample.Effect.ParticleSystem;
+
 import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -52,8 +55,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
 
     private void InitializeEnemy()
     {
-        Random rand = DWGlobal.rand;
+        //Random rand = DWGlobal.rand;
         //標的の状態を初期化します
+        /*
         for (int i = 0; i < TARGET_NUM; i++) {
             float x = rand.nextFloat() * 2.0f - 1.0f;
             float y = rand.nextFloat() * 2.0f - 1.0f;
@@ -62,7 +66,12 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             float speed = rand.nextFloat() * 0.01f + 0.01f;
             float turnAngle = rand.nextFloat() * 4.0f - 2.0f;
             targets[i] = new Enemy(x, y, angle, size, speed, turnAngle);
+        }*/
+        for (int i = 0; i < TARGET_NUM; i++) {
+
+            targets[i] = new Enemy(0, 0, 0.3f, 0.3f, 0.02f, 0);
         }
+
 
     }
 
@@ -78,7 +87,14 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     {
         Random rand = DWGlobal.rand;
         Enemy[] targets = this.targets;
+
+        for (int i = 0; i < TARGET_NUM; i++) {
+
+            targets[i].move(0,0);
+        }
+
         // 全ての標的を1つずつ動かします
+        /*
         for (int i = 0; i < TARGET_NUM; i++) {
             // ランダムなタイミングで方向転換するようにします
             if (rand.nextInt(100) == 0) {// 100回に1回の確率で方向転換させます
@@ -95,6 +111,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             float moveY = (rand.nextFloat() - 0.5f) * 0.01f;
             particleSystem.add(targets[i].x, targets[i].y, 0.1f, moveX, moveY);
         }
+        */
 
     }
 

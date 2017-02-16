@@ -1,8 +1,10 @@
-package com.starcompany.openglsample;
+package com.starcompany.openglsample.Charactor;
+
+import com.starcompany.openglsample.GraphicUtil;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Enemy {
+public class Enemy extends Charactor {
     private static final String TAG = Enemy.class.getSimpleName();
     public float angle;
     public float x, y;
@@ -11,6 +13,7 @@ public class Enemy {
     public float turnAngle;
 
     public Enemy(float x, float y, float angle, float size, float speed, float turnAngle) {
+        super(x,y,angle,size,speed,turnAngle);
         this.x = x;
         this.y = y;
         this.angle = angle;
@@ -19,17 +22,17 @@ public class Enemy {
         this.turnAngle = turnAngle;
     }
 
-    //標的を移動させます
-    public void move() {
+    @Override
+    public void move(float x, float y) {
         float theta = angle / 180.0f * (float)Math.PI;
-        x = x + (float)Math.cos(theta) * speed;
-        y = y + (float)Math.sin(theta) * speed;
+        this.x = this.x + (float)Math.cos(theta) * speed;
+        this.y = this.y + (float)Math.sin(theta) * speed;
 
         //ワープ処理
-        if (x >=  2.0f) x -= 4.0f;
-        if (x <= -2.0f) x += 4.0f;
-        if (y >=  2.5f) y -= 5.0f;
-        if (y <= -2.5f) y += 5.0f;
+        if (this.x >=  2.0f) this.x -= 4.0f;
+        if (this.x <= -2.0f) this.x += 4.0f;
+        if (this.y >=  2.5f) this.y -= 5.0f;
+        if (this.y <= -2.5f) this.y += 5.0f;
     }
 
     //ポイントが当たり判定の範囲内かを返します
@@ -46,6 +49,7 @@ public class Enemy {
     }
 
     //標的を描画します
+    @Override
     public void draw(GL10 gl, int texture) {
         gl.glPushMatrix();
         {

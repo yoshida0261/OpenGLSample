@@ -1,4 +1,6 @@
-package com.starcompany.openglsample;
+package com.starcompany.openglsample.Effect;
+
+import com.starcompany.openglsample.GraphicUtil;
 
 import javax.microedition.khronos.opengles.GL10;
 
