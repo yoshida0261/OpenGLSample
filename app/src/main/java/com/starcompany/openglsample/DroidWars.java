@@ -6,6 +6,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.Log;
 
+import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
 import com.starcompany.openglsample.Effect.ParticleSystem;
 
@@ -20,40 +21,37 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     public static final int TARGET_NUM = 10;
     private static final int GAME_INTERVAL = 60;
     private int score;
-    
-
-    // コンテキスト
     private Context context;
 
     private int width;
     private int height;
     
 
-    // テクスチャ
     private int bgTexture;
-    
     private int enemyTexture;
+    private int droidTexture;
     private int mNumberTexture;
     private int mGameOverTexture;//ゲームオーバー用テクスチャ
     private int mParticleTexture;//パーティクル用テクスチャ
 
     private ParticleSystem particleSystem;
     private Enemy[] targets = new Enemy[TARGET_NUM];
+    private Droidkun droid = null;
 
     private long startTime;
     private boolean gameOverFlag;
-    private Handler handler = new Handler();//ハンドラー
+    private Handler handler = new Handler();
 
     //private MySe mSe;
 
     public DroidWars(Context context) {
         this.context = context;
-        this.particleSystem = new ParticleSystem(300, 30);//生成します
+        this.particleSystem = new ParticleSystem(300, 30);
 
         startNewGame();
     }
 
-    private void InitializeEnemy()
+    private void InitializeCharacter()
     {
         //Random rand = DWGlobal.rand;
         //標的の状態を初期化します
@@ -67,6 +65,8 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             float turnAngle = rand.nextFloat() * 4.0f - 2.0f;
             targets[i] = new Enemy(x, y, angle, size, speed, turnAngle);
         }*/
+        droid = new Droidkun(0, -0.5f, 0f, 0.5f, 0.02f, 0);
+
         for (int i = 0; i < TARGET_NUM; i++) {
 
             targets[i] = new Enemy(0, 0, 0.3f, 0.3f, 0.02f, 0);
@@ -77,7 +77,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
 
     public void startNewGame() {
 
-        InitializeEnemy();
+        InitializeCharacter();
         this.score = 0;
         this.startTime = System.currentTimeMillis();
         this.gameOverFlag = false;
@@ -92,26 +92,6 @@ public class DroidWars implements  GLSurfaceView.Renderer{
 
             targets[i].move(0,0);
         }
-
-        // 全ての標的を1つずつ動かします
-        /*
-        for (int i = 0; i < TARGET_NUM; i++) {
-            // ランダムなタイミングで方向転換するようにします
-            if (rand.nextInt(100) == 0) {// 100回に1回の確率で方向転換させます
-                // 旋回する角度を -2.0〜2.0の間でランダムに設定します。
-                targets[i].turnAngle = rand.nextFloat() * 4.0f - 2.0f;
-            }
-
-            // ここで標的を旋回させます
-            targets[i].angle = targets[i].angle + targets[i].turnAngle;
-            // 標的を動かします
-            targets[i].move();
-            // パーティクルを使って軌跡を描画します
-            float moveX = (rand.nextFloat() - 0.5f) * 0.01f;
-            float moveY = (rand.nextFloat() - 0.5f) * 0.01f;
-            particleSystem.add(targets[i].x, targets[i].y, 0.1f, moveX, moveY);
-        }
-        */
 
     }
 
@@ -151,6 +131,10 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         for (int i = 0; i < TARGET_NUM; i++) {
             targets[i].draw(gl, enemyTexture);
         }
+        //droid.draw(gl, droidTexture);
+        GraphicUtil.drawTexture(gl, 0.0f, -1.0f, 0.2f, 0.2f, droidTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+
+
         gl.glDisable(GL10.GL_BLEND);
 
         /*
@@ -193,6 +177,12 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         if (bgTexture == 0) {
             Log.e(getClass().toString(), "load texture error! circuit");
         }
+
+        this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.droid2);
+        if(droidTexture == 0){
+            Log.e(getClass().toString(), "load texture error! droid");
+        }
+
         /*
         this.mNumberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number_texture);
         if (mNumberTexture == 0) {

@@ -1,8 +1,8 @@
 package com.starcompany.openglsample;
 
+import android.app.Activity;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
 
     private Button mRetryButton;//リトライボタン
@@ -22,12 +22,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // フルスクリーン、タイトルバーの非表示
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        //インスタンスを保持させる
         DWGlobal.mainActivity = this;
 
         this.mRenderer = new DroidWars(this);
@@ -35,16 +34,19 @@ public class MainActivity extends AppCompatActivity {
         glSurfaceView.setRenderer(mRenderer);
         setContentView(glSurfaceView);
 
-        //ボタンのレイアウト
+
+
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-        params.setMargins(0, 150, 0, 0);//ゲームオーバーテクスチャにかぶらないようにする
-        //ボタンの作成
+        params.setMargins(0, 150, 0, 0);
+
+
         this.mRetryButton = new Button(this);
         this.mRetryButton.setText("Retry");
         hideRetryButton();//非表示にする
         addContentView(mRetryButton, params);
-        //イベントの追加
+
+
 
 
         this.mRetryButton.setOnClickListener(new Button.OnClickListener(){
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //　保存した状態に戻す
         if (savedInstanceState != null) {
             long startTime = savedInstanceState.getLong("startTime");
             long pauseTime = savedInstanceState.getLong("pauseTime");

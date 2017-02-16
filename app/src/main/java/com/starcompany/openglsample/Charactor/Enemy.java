@@ -6,27 +6,16 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Enemy extends Charactor {
     private static final String TAG = Enemy.class.getSimpleName();
-    public float angle;
-    public float x, y;
-    public float size;
-    public float speed;
-    public float turnAngle;
 
     public Enemy(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.size = size;
-        this.speed = speed;
-        this.turnAngle = turnAngle;
     }
 
     @Override
     public void move(float x, float y) {
-        float theta = angle / 180.0f * (float)Math.PI;
-        this.x = this.x + (float)Math.cos(theta) * speed;
-        this.y = this.y + (float)Math.sin(theta) * speed;
+        //float theta = angle / 180.0f * (float)Math.PI;
+        this.x = this.x + 0.03f;
+        //this.y = this.y + (float)Math.sin(theta) * speed;
 
         //ワープ処理
         if (this.x >=  2.0f) this.x -= 4.0f;
