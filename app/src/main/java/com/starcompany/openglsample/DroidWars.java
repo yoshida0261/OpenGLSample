@@ -6,6 +6,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.Log;
 
+import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
 import com.starcompany.openglsample.Effect.ParticleSystem;
@@ -19,6 +20,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class DroidWars implements  GLSurfaceView.Renderer{
     private static final String TAG = DroidWars.class.getSimpleName();
     public static final int TARGET_NUM = 10;
+    private static final int BLOCK_NUM = 6;
     private static final int GAME_INTERVAL = 60;
     private int score;
     private Context context;
@@ -30,6 +32,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private int bgTexture;
     private int enemyTexture;
     private int droidTexture;
+    private int blockTexture;
+    private int ufoTexture;
+
     private int mNumberTexture;
     private int mGameOverTexture;//ゲームオーバー用テクスチャ
     private int mParticleTexture;//パーティクル用テクスチャ
@@ -37,6 +42,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private ParticleSystem particleSystem;
     private Enemy[] targets = new Enemy[TARGET_NUM];
     private Droidkun droid = null;
+    private Block[] blocks = new Block[BLOCK_NUM];
 
     private long startTime;
     private boolean gameOverFlag;
@@ -70,6 +76,10 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         for (int i = 0; i < TARGET_NUM; i++) {
 
             targets[i] = new Enemy(0, 0, 0.3f, 0.3f, 0.02f, 0);
+        }
+
+        for(int i =0;i<BLOCK_NUM;i++){
+            blocks[i] = new Block(-0.75f + 0.3f * i , -0.8f, 0, 0.3f, 0.02f, 0);
         }
 
 
@@ -131,8 +141,12 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         for (int i = 0; i < TARGET_NUM; i++) {
             targets[i].draw(gl, enemyTexture);
         }
-        //droid.draw(gl, droidTexture);
-        GraphicUtil.drawTexture(gl, 0.0f, -1.0f, 0.2f, 0.2f, droidTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+        for (int i = 0; i < BLOCK_NUM; i++) {
+            blocks[i].draw(gl, blockTexture);
+        }
+
+        droid.draw(gl, droidTexture);
+
 
 
         gl.glDisable(GL10.GL_BLEND);
@@ -181,6 +195,10 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.droid2);
         if(droidTexture == 0){
             Log.e(getClass().toString(), "load texture error! droid");
+        }
+        this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
+        if(blockTexture == 0){
+            Log.e(getClass().toString(), "load texture error! block");
         }
 
         /*

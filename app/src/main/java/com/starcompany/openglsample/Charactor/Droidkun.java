@@ -21,8 +21,9 @@ public class Droidkun  extends Charactor {
     @Override
     public void draw(GL10 gl, int texture) {
 
-        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
-/*
+        GraphicUtil.drawTexture(gl, 0.0f, -1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
+
+        /*
         gl.glPushMatrix();
         {
             GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
