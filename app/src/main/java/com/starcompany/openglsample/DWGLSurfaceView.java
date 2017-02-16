@@ -6,16 +6,14 @@ import android.opengl.GLSurfaceView;
 
 public class DWGLSurfaceView extends GLSurfaceView{
     private static final String TAG = DWGLSurfaceView.class.getSimpleName();
-
     private float width;
     private float height;
 
-    //MyRendererを保持する
     private DroidWars mMyRenderer;
 
     public DWGLSurfaceView(Context context) {
         super(context);
-        setFocusable(true);//タッチイベントが取得できるようにする
+        setFocusable(true);
     }
 
     @Override
