@@ -9,6 +9,8 @@ public abstract  class Charactor {
     public float size;
     public float speed;
     public float turnAngle;
+    public GL10  gl;
+    public int   texture;
 
     public Charactor(float x, float y, float angle, float size, float speed, float turnAngle) {
         this.x = x;
@@ -19,8 +21,9 @@ public abstract  class Charactor {
         this.turnAngle = turnAngle;
 
     }
-    abstract  public void move(float x, float y);
-    abstract  public void draw(GL10 gl, int texture);
+    abstract  public void setGraphic(GL10 gl, int texture);
+    abstract  public void move();
+    abstract  public void draw();
 
 
 

@@ -14,12 +14,18 @@ public class Droidkun  extends Charactor {
     }
 
     @Override
-    public void move(float x, float y) {
+    public void setGraphic(GL10 gl, int texture) {
+        this.gl = gl;
+        this.texture = texture;
+    }
+
+    @Override
+    public void move() {
 
     }
 
     @Override
-    public void draw(GL10 gl, int texture) {
+    public void draw() {
 
         GraphicUtil.drawTexture(gl, 0.0f, -1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
 

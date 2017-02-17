@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -98,6 +99,10 @@ public class GraphicUtil {
 
         //TextureManagerに登録する
         TextureManager.addTexture(resId, textures[0]);
+
+        if(textures[0] == 0){
+            Log.e("GraphicUtil", "load texture error! " + resources.toString());
+        }
 
         return textures[0];
     }

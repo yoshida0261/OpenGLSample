@@ -12,7 +12,7 @@ public class Enemy extends Charactor {
     }
 
     @Override
-    public void move(float x, float y) {
+    public void move() {
         //float theta = angle / 180.0f * (float)Math.PI;
         this.x = this.x + 0.03f;
         //this.y = this.y + (float)Math.sin(theta) * speed;
@@ -36,10 +36,15 @@ public class Enemy extends Charactor {
         }
         return false;
     }
+    @Override
+    public void setGraphic(GL10 gl, int texture) {
+        this.gl = gl;
+        this.texture = texture;
+    }
 
     //標的を描画します
     @Override
-    public void draw(GL10 gl, int texture) {
+    public void draw() {
         gl.glPushMatrix();
         {
             gl.glTranslatef(x, y, 0.0f);
