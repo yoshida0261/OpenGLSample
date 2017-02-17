@@ -2,8 +2,6 @@ package com.starcompany.openglsample.Charactor;
 
 import com.starcompany.openglsample.GraphicUtil;
 
-import javax.microedition.khronos.opengles.GL10;
-
 public class Enemy extends Charactor {
     private static final String TAG = Enemy.class.getSimpleName();
 
@@ -35,11 +33,6 @@ public class Enemy extends Charactor {
             return true;
         }
         return false;
-    }
-    @Override
-    public void setGraphic(GL10 gl, int texture) {
-        this.gl = gl;
-        this.texture = texture;
     }
 
     //標的を描画します

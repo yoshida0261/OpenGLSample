@@ -1,7 +1,5 @@
 package com.starcompany.openglsample.Charactor;
 
-import javax.microedition.khronos.opengles.GL10;
-
 public class Shot extends Charactor{
     private static final String TAG = Shot.class.getSimpleName();
 
@@ -9,10 +7,6 @@ public class Shot extends Charactor{
         super(x, y, angle, size, speed, turnAngle);
     }
 
-    @Override
-    public void setGraphic(GL10 gl, int texture) {
-
-    }
 
     @Override
     public void move() {

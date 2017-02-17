@@ -94,7 +94,6 @@ public class MainActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        // テクスチャを削除する
         TextureManager.deleteAll(DWGlobal.gl);
 
         mPauseTime = System.currentTimeMillis();//バックグラウンドになった時刻を覚えておく
@@ -103,7 +102,7 @@ public class MainActivity extends Activity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // 状態を保存する
+
         outState.putLong("startTime", droidWars.getStartTime());//開始時間
         outState.putLong("pauseTime", System.currentTimeMillis());//onPauseした時間
         outState.putInt("score", droidWars.getScore());//スコア

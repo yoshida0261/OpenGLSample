@@ -2,8 +2,6 @@ package com.starcompany.openglsample.Charactor;
 
 import com.starcompany.openglsample.GraphicUtil;
 
-import javax.microedition.khronos.opengles.GL10;
-
 
 public class Droidkun  extends Charactor {
     private static final String TAG = Droidkun.class.getSimpleName();
@@ -13,11 +11,6 @@ public class Droidkun  extends Charactor {
         super(x,y,angle,size,speed,turnAngle);
     }
 
-    @Override
-    public void setGraphic(GL10 gl, int texture) {
-        this.gl = gl;
-        this.texture = texture;
-    }
 
     @Override
     public void move() {

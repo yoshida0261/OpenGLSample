@@ -21,7 +21,11 @@ public abstract  class Charactor {
         this.turnAngle = turnAngle;
 
     }
-    abstract  public void setGraphic(GL10 gl, int texture);
+
+    public void setGraphic(GL10 gl, int texture){
+        this.gl = gl;
+        this.texture = texture;
+    }
     abstract  public void move();
     abstract  public void draw();
 
