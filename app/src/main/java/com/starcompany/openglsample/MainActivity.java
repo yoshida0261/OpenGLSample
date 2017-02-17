@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
 
 
     private Button mRetryButton;//リトライボタン
-    private DroidWars mRenderer;
+    private DroidWars droidWars;
     private long mPauseTime = 0L;
 
     @Override
@@ -29,9 +29,9 @@ public class MainActivity extends Activity {
 
         DWGlobal.mainActivity = this;
 
-        this.mRenderer = new DroidWars(this);
+        this.droidWars = new DroidWars(this);
         DWGLSurfaceView glSurfaceView = new DWGLSurfaceView(this);
-        glSurfaceView.setRenderer(mRenderer);
+        glSurfaceView.setRenderer(droidWars);
         setContentView(glSurfaceView);
 
 
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v){
                 hideRetryButton();
-                mRenderer.startNewGame();
+                droidWars.startNewGame();
             }
         });
 
@@ -63,8 +63,8 @@ public class MainActivity extends Activity {
             long pauseTime = savedInstanceState.getLong("pauseTime");
             int score = savedInstanceState.getInt("score");
             long pausedTime = pauseTime - startTime;
-            mRenderer.subtractPausedTime(-pausedTime);
-            mRenderer.setScore(score);
+            droidWars.subtractPausedTime(-pausedTime);
+            droidWars.setScore(score);
         }
     }
 
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
         if (mPauseTime != 0L) {
             // バックグラウンドになっていた時間を計算する
             long pausedTime = System.currentTimeMillis() - mPauseTime;
-            mRenderer.subtractPausedTime(pausedTime);
+            droidWars.subtractPausedTime(pausedTime);
         }
     }
 
@@ -104,9 +104,9 @@ public class MainActivity extends Activity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // 状態を保存する
-        outState.putLong("startTime", mRenderer.getStartTime());//開始時間
+        outState.putLong("startTime", droidWars.getStartTime());//開始時間
         outState.putLong("pauseTime", System.currentTimeMillis());//onPauseした時間
-        outState.putInt("score", mRenderer.getScore());//スコア
+        outState.putInt("score", droidWars.getScore());//スコア
     }
 
 
