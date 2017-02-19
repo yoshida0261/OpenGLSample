@@ -12,7 +12,7 @@ public class Enemy extends Charactor {
     @Override
     public void move() {
         //float theta = angle / 180.0f * (float)Math.PI;
-        this.x = this.x + 0.03f;
+        this.x = this.x + 0.01f;
         //this.y = this.y + (float)Math.sin(theta) * speed;
 
         //ワープ処理
@@ -22,18 +22,6 @@ public class Enemy extends Charactor {
         if (this.y <= -2.5f) this.y += 5.0f;
     }
 
-    //ポイントが当たり判定の範囲内かを返します
-    public boolean isPointInside(float x, float y) {
-        // 標的とタッチされたポイントとの距離を計算します
-        float dx = x - x;
-        float dy = y - this.y;
-        float distance = (float) Math.sqrt(dx * dx + dy * dy);
-
-        if (distance <= size * 0.5f) {
-            return true;
-        }
-        return false;
-    }
 
     //標的を描画します
     @Override
@@ -47,6 +35,7 @@ public class Enemy extends Charactor {
         }
         gl.glPopMatrix();
     }
+
 
 }
  

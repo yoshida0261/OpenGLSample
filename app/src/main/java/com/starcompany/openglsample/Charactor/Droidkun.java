@@ -6,9 +6,11 @@ import com.starcompany.openglsample.GraphicUtil;
 public class Droidkun  extends Charactor {
     private static final String TAG = Droidkun.class.getSimpleName();
 
+    private Shot shot = null;
 
     public Droidkun(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
+
     }
 
 
@@ -21,6 +23,7 @@ public class Droidkun  extends Charactor {
     public void draw() {
 
         GraphicUtil.drawTexture(gl, 0.0f, -1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
+
 
         /*
         gl.glPushMatrix();
