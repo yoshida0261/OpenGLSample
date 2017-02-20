@@ -9,10 +9,7 @@ import android.util.Log;
 import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
-import com.starcompany.openglsample.Charactor.Shot;
 import com.starcompany.openglsample.Effect.ParticleSystem;
-
-import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -20,7 +17,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DroidWars implements  GLSurfaceView.Renderer{
     private static final String TAG = DroidWars.class.getSimpleName();
-    public static final int TARGET_NUM = 10;
+    public static final int TARGET_NUM = 1;
     public static final int BLOCK_NUM = 6;
     private static final int GAME_INTERVAL = 60;
     private int score;
@@ -42,6 +39,8 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private Enemy[] enemies = new Enemy[TARGET_NUM];
     private Droidkun droid = null;
     private Block[] blocks = new Block[BLOCK_NUM];
+    private DWTouchEvent touchEvent;
+    private DWRenderer renderer;
 
     private long startTime;
     private boolean gameOverFlag;
@@ -51,6 +50,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     public DroidWars(Context context) {
         this.context = context;
         this.particleSystem = new ParticleSystem(300, 30);
+
         startNewGame();
     }
 
@@ -70,58 +70,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         this.score = 0;
         this.startTime = System.currentTimeMillis();
         this.gameOverFlag = false;
-    }
 
-    private void moveEnemy()
-    {
-        Random rand = DWGlobal.rand;
-        Enemy[] enemies = this.enemies;
-
-        for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].move();
-        }
-    }
-
-    //描画を行う部分を記述するメソッドを追加する
-    public void renderMain(GL10 gl) {
-        // 経過時間を計算する
-        int passedTime = (int) (System.currentTimeMillis() - startTime) / 1000;
-        int remainTime = GAME_INTERVAL - passedTime;// 　残り時間を計算する
-        if (remainTime <= 0) {
-            remainTime = 0;// 残り時間がマイナスにならないようにする
-            if (!gameOverFlag) {
-                gameOverFlag = true;// ゲームオーバー状態にする
-                // Global.mainActivity.showRetryButton()をUIスレッド上で実行する
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        DWGlobal.mainActivity.showRetryButton();
-                    }
-                });
-            }
-        }
-
-        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
-
-        moveEnemy();
-        for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].draw();
-        }
-        for (int i = 0; i < BLOCK_NUM; i++) {
-            blocks[i].draw();
-        }
-
-
-        droid.move();
-        droid.draw();
-        droid.getShot().move();
-        droid.getShot().draw();
-
-
-
-
-        gl.glDisable(GL10.GL_BLEND);
-
+        this.touchEvent = new DWTouchEvent(droid, enemies);
+        this.renderer = new DWRenderer(droid, enemies, blocks);
     }
 
     @Override
@@ -136,7 +87,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        renderMain(gl);
+        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+        this.renderer.renderMain();
+
 
 
     }
@@ -190,54 +143,10 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     //画面がタッチされたときに呼ばれるメソッド
     public void touched(float x, float y) {
         Log.i(getClass().toString(), String.format("touched! x = %f, y = %f", x, y));
-        Enemy[] enemies = this.enemies;
-        Random rand = DWGlobal.rand;
-
         if (gameOverFlag) {
             return;
         }
-
-        droid.move(x);
-
-        Shot shot = droid.getShot();
-        shot.droidShot(x,-1.0f); //droidと同じ高さ
-
-        // すべての標的との当たり判定をします
-        for (int i = 0; i < TARGET_NUM; i++) {
-
-            if(enemies[i].isPointInside(shot.getX(), shot.getY())){
-
-            }
-            /*
-            if (!enemies[i].isPointInside(x, y)) {
-
-                continue;
-            }*/
-
-
-
-
-            //弾が発射？
-
-
-
-            // enemyからのたまがdroidにあたっているかの判定も必要
-
-/*            //パーティクルを放出します
-            for (int j = 0; j < 40; j++) {
-                float moveX = (rand.nextFloat() - 0.5f) * 0.05f;
-                float moveY = (rand.nextFloat() - 0.5f) * 0.05f;
-                particleSystem.add(enemies[i].x, enemies[i].y, 0.2f, moveX, moveY);
-            }
-            // 標的をランダムな位置に移動します
-            float dist = 2.0f;// 画面中央から2.0fはなれた円周上の点
-            float theta = (float) DWGlobal.rand.nextInt(360) / 180.0f * (float) Math.PI;// 適当な位置
-            enemies[i].x = (float) Math.cos(theta) * dist;
-            enemies[i].y = (float) Math.sin(theta) * dist;
-            score += 100;// 100点加算します
-            Log.i(getClass().toString(), "score = " + score);
- */
-        }
+        touchEvent.onTouch(x,y);
     }
 
     public void subtractPausedTime(long pausedTime) {
