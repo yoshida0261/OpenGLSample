@@ -110,6 +110,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].draw();
         }
+
+
+        droid.move();
         droid.draw();
         droid.getShot().move();
         droid.getShot().draw();
@@ -194,8 +197,10 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             return;
         }
 
+        droid.move(x);
+
         Shot shot = droid.getShot();
-        shot.droidShot(x,y);
+        shot.droidShot(x,-1.0f); //droidと同じ高さ
 
         // すべての標的との当たり判定をします
         for (int i = 0; i < TARGET_NUM; i++) {

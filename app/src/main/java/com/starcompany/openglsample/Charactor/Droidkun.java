@@ -1,11 +1,14 @@
 package com.starcompany.openglsample.Charactor;
 
+import android.util.Log;
+
 import com.starcompany.openglsample.GraphicUtil;
 
 
 public class Droidkun  extends Charactor {
     private static final String TAG = Droidkun.class.getSimpleName();
 
+    private float moveX;
     private Shot shot = null;
 
     public Droidkun(float x, float y, float angle, float size, float speed, float turnAngle) {
@@ -16,15 +19,37 @@ public class Droidkun  extends Charactor {
     }
 
 
+    /**
+     * 自分の位置からx分移動する
+     *
+     */
     @Override
     public void move() {
 
+        if(moveX < 0){
+            this.x = this.x - 0.01f;
+            if(moveX > this.x){
+                moveX = 0.0f;
+            }
+
+        }else if(moveX > 0){
+            this.x = this.x + 0.01f;
+            if(moveX < this.x){
+                moveX = 0.0f;
+            }
+
+        }
+    }
+
+    public void move(float x){
+        this.moveX = x;
+        Log.i(TAG, String.valueOf(x));
     }
 
     @Override
     public void draw() {
 
-        GraphicUtil.drawTexture(gl, 0.0f, -1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
+        GraphicUtil.drawTexture(gl, x, -1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
         /*
