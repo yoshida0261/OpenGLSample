@@ -18,6 +18,20 @@ public class DWTouchEvent {
         this.enemies = enemies;
     }
 
+    public void isPointInside(float x, float y)
+    {
+        for (int i = 0; i < TARGET_NUM; i++) {
+
+            if (enemies[i].isPointInside(x, y)) {
+                enemies[i].x = 3.0f;
+                enemies[i].y = 3.0f;
+            }
+
+
+        }
+
+    }
+
     public void onTouch(float x, float y) {
 
         droid.move(x);
@@ -26,7 +40,7 @@ public class DWTouchEvent {
         shot.droidShot(x, -1.0f); //droidと同じ高さ
 
         // すべての標的との当たり判定をします
-        for (int i = 0; i < TARGET_NUM; i++) {
+       /* for (int i = 0; i < TARGET_NUM; i++) {
 
             if (enemies[i].isPointInside(shot.getX(), shot.getY())) {
 
@@ -35,7 +49,7 @@ public class DWTouchEvent {
             }
 
 
-        }
+        }*/
         // enemyからのたまがdroidにあたっているかの判定も必要
 
 /*            //パーティクルを放出します

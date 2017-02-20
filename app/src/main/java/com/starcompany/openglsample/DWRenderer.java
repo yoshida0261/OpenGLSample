@@ -41,10 +41,17 @@ public class DWRenderer {
         droid.draw();
         droid.getShot().move();
         droid.getShot().draw();
-
-
         gl.glDisable(GL10.GL_BLEND);
+    }
 
+    private void timeCount(){
+
+    }
+
+    private void maxScore(){
+        //前回のスコアを取得
+        //最高スコアなら更新
+        //dbに格納するのは気が向いたら
     }
 
     private void timeOver(){
@@ -70,6 +77,11 @@ public class DWRenderer {
 
     }
 
+    /**
+     * 左端から右端へ
+     * 右端へ行った後は１キャラ分ススメて左端に戻る
+     * 最後Droidkunとぶつかったら終わり
+     */
     private void moveEnemy()
     {
         Random rand = DWGlobal.rand; // randamで弾だし

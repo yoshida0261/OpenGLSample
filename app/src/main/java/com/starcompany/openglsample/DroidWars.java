@@ -9,6 +9,7 @@ import android.util.Log;
 import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
+import com.starcompany.openglsample.Charactor.Shot;
 import com.starcompany.openglsample.Effect.ParticleSystem;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -70,7 +71,6 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         this.score = 0;
         this.startTime = System.currentTimeMillis();
         this.gameOverFlag = false;
-
         this.touchEvent = new DWTouchEvent(droid, enemies);
         this.renderer = new DWRenderer(droid, enemies, blocks);
     }
@@ -89,9 +89,8 @@ public class DroidWars implements  GLSurfaceView.Renderer{
 
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         this.renderer.renderMain();
-
-
-
+        Shot shot = this.droid.getShot();
+        this.touchEvent.isPointInside(shot.getX(), shot.getY());
     }
 
     //テクスチャを読み込むメソッド
