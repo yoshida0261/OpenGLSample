@@ -11,6 +11,8 @@ public class Droidkun  extends Charactor {
     public Droidkun(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
 
+        shot = new Shot(x,y,angle, size, speed, turnAngle);
+
     }
 
 
@@ -37,6 +39,27 @@ public class Droidkun  extends Charactor {
         gl.glPopMatrix();
 */
     }
+
+    /**
+     * 撃った弾があたったかの判定
+     * @param x
+     * @param y
+     * @return
+     */
+    @Override
+    public boolean isPointInside(float x, float y){
+        return shot.isPointInside(x,y);
+    }
+
+    public void Attack(float x, float y){
+        shot.droidShot(x,y);
+    }
+
+    public Shot getShot()
+    {
+        return  shot;
+    }
+
 
 }
  

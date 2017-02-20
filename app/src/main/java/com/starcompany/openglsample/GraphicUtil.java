@@ -185,6 +185,10 @@ public class GraphicUtil {
         drawSquare(gl, 1.0f, 0.0f, 0.0f, 1.0f);
     }
 
+    public static final void drawShot(GL10 gl, float x, float y){
+        drawRectangle(gl, x, y, 0.2f, 0.2f, 1.0f, 0.0f, 0.0f, 1.0f);
+    }
+
     public static final FloatBuffer makeFloatBuffer(float[] arr) {
         ByteBuffer bb = ByteBuffer.allocateDirect(arr.length*4);
         bb.order(ByteOrder.nativeOrder());

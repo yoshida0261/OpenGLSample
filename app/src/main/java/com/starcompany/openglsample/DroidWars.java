@@ -9,6 +9,7 @@ import android.util.Log;
 import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
+import com.starcompany.openglsample.Charactor.Shot;
 import com.starcompany.openglsample.Effect.ParticleSystem;
 
 import java.util.Random;
@@ -24,11 +25,8 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private static final int GAME_INTERVAL = 60;
     private int score;
     private Context context;
-
     private int width;
     private int height;
-    
-
 
     private int bgTexture;
     private int enemyTexture;
@@ -45,18 +43,14 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private Droidkun droid = null;
     private Block[] blocks = new Block[BLOCK_NUM];
 
-
     private long startTime;
     private boolean gameOverFlag;
     private Handler handler = new Handler();
-
     //private MySe mSe;
 
     public DroidWars(Context context) {
         this.context = context;
         this.particleSystem = new ParticleSystem(300, 30);
-
-
         startNewGame();
     }
 
@@ -117,6 +111,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             blocks[i].draw();
         }
         droid.draw();
+        droid.getShot().move();
+        droid.getShot().draw();
+
 
 
 
@@ -178,6 +175,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             blocks[i].setGraphic(gl, this.blockTexture);
         }
         droid.setGraphic(gl, this.droidTexture);
+        droid.getShot().setGraphic(gl, droidTexture);
 
     }
 
@@ -192,26 +190,48 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         Enemy[] enemies = this.enemies;
         Random rand = DWGlobal.rand;
 
-        if (!gameOverFlag) {
-            // すべての標的との当たり判定をします
-            for (int i = 0; i < TARGET_NUM; i++) {
-                if (enemies[i].isPointInside(x, y)) {
-                    //パーティクルを放出します
-                    for (int j = 0; j < 40; j++) {
-                        float moveX = (rand.nextFloat() - 0.5f) * 0.05f;
-                        float moveY = (rand.nextFloat() - 0.5f) * 0.05f;
-                        particleSystem.add(enemies[i].x, enemies[i].y, 0.2f, moveX, moveY);
-                    }
-                    // 標的をランダムな位置に移動します
-                    float dist = 2.0f;// 画面中央から2.0fはなれた円周上の点
-                    float theta = (float) DWGlobal.rand.nextInt(360) / 180.0f * (float) Math.PI;// 適当な位置
-                    enemies[i].x = (float) Math.cos(theta) * dist;
-                    enemies[i].y = (float) Math.sin(theta) * dist;
-                    score += 100;// 100点加算します
-                    Log.i(getClass().toString(), "score = " + score);
+        if (gameOverFlag) {
+            return;
+        }
 
-                }
+        Shot shot = droid.getShot();
+        shot.droidShot(x,y);
+
+        // すべての標的との当たり判定をします
+        for (int i = 0; i < TARGET_NUM; i++) {
+
+            if(enemies[i].isPointInside(shot.getX(), shot.getY())){
+
             }
+            /*
+            if (!enemies[i].isPointInside(x, y)) {
+
+                continue;
+            }*/
+
+
+
+
+            //弾が発射？
+
+
+
+            // enemyからのたまがdroidにあたっているかの判定も必要
+
+/*            //パーティクルを放出します
+            for (int j = 0; j < 40; j++) {
+                float moveX = (rand.nextFloat() - 0.5f) * 0.05f;
+                float moveY = (rand.nextFloat() - 0.5f) * 0.05f;
+                particleSystem.add(enemies[i].x, enemies[i].y, 0.2f, moveX, moveY);
+            }
+            // 標的をランダムな位置に移動します
+            float dist = 2.0f;// 画面中央から2.0fはなれた円周上の点
+            float theta = (float) DWGlobal.rand.nextInt(360) / 180.0f * (float) Math.PI;// 適当な位置
+            enemies[i].x = (float) Math.cos(theta) * dist;
+            enemies[i].y = (float) Math.sin(theta) * dist;
+            score += 100;// 100点加算します
+            Log.i(getClass().toString(), "score = " + score);
+ */
         }
     }
 
