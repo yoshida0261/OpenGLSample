@@ -18,7 +18,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DroidWars implements  GLSurfaceView.Renderer{
     private static final String TAG = DroidWars.class.getSimpleName();
-    public static final int TARGET_NUM = 1;
+    public static final int TARGET_NUM = 36;
     public static final int BLOCK_NUM = 6;
     private static final int GAME_INTERVAL = 60;
     private int score;
@@ -59,9 +59,18 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private void InitializeCharacter()
     {
         droid = new Droidkun(0, -0.5f, 0f, 0.5f, 0.02f, 0);
+
+        float y = 0.7f;
+        int count = 0;
         for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i] = new Enemy(0, 0, 0.3f, 0.3f, 0.02f, 0);
+            enemies[i] = new Enemy(-0.9f +(0.16f * count), y, 0.1f, 0.1f, 0.02f, 0);
+            count += 1;
+            if(i == 11 || i == 23){
+                count = 0;
+                y += 0.15;
+            }
         }
+
         for(int i =0;i<BLOCK_NUM;i++){
             blocks[i] = new Block(-0.75f + 0.3f * i , -0.8f, 0, 0.3f, 0.02f, 0);
         }

@@ -62,12 +62,6 @@ public class Shot extends Charactor{
         //GraphicUtil.drawShot(gl,x,y);
     }
 
-    @Override
-    public boolean isPointInside(float x, float y) {
-        this.x = x;
-        this.y = y;
-        return false;
-    }
 
     public float getX(){
         return  this.x;
@@ -77,6 +71,10 @@ public class Shot extends Charactor{
         return  this.y;
     }
 
+    public boolean isShotState()
+    {
+        return  this.isShotStart;
+    }
 
     public void Hit(){
         this.isShotStart = false;

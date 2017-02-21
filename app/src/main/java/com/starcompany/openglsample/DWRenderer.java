@@ -27,7 +27,7 @@ public class DWRenderer {
 
     public void renderMain(){
 
-        moveEnemy();
+        //moveEnemy();
         for (int i = 0; i < TARGET_NUM; i++) {
             enemies[i].draw();
         }

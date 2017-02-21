@@ -20,13 +20,14 @@ public class DWTouchEvent {
 
     public void isPointInside(float x, float y)
     {
+        Shot shot = droid.getShot();
         for (int i = 0; i < TARGET_NUM; i++) {
 
-            if (enemies[i].isPointInside(x, y)) {
+            if (shot.isShotState() == true && enemies[i].isPointInside(x, y)) {
                 enemies[i].x = 3.0f;
                 enemies[i].y = 3.0f;
+                shot.Hit();
             }
-
 
         }
 
