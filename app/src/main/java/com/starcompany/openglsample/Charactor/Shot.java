@@ -51,11 +51,15 @@ public class Shot extends Charactor{
         }
     }
 
+
+
     @Override
     public void draw() {
 
 
-        GraphicUtil.drawShot(gl,x,y);
+        GraphicUtil.drawTexture(gl, x, y, 0.1f, 0.1f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
+
+        //GraphicUtil.drawShot(gl,x,y);
     }
 
     @Override

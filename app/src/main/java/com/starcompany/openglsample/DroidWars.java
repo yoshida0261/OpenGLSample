@@ -31,6 +31,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private int droidTexture;
     private int blockTexture;
     private int ufoTexture;
+    private int shotTexture;
 
     private int mNumberTexture;
     private int mGameOverTexture;//ゲームオーバー用テクスチャ
@@ -100,6 +101,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
         this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.droid2);
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
+        this.shotTexture = GraphicUtil.loadTexture(gl, res, R.drawable.shot);
 
         /*
         this.mNumberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number_texture);
@@ -130,7 +132,8 @@ public class DroidWars implements  GLSurfaceView.Renderer{
             blocks[i].setGraphic(gl, this.blockTexture);
         }
         droid.setGraphic(gl, this.droidTexture);
-        droid.getShot().setGraphic(gl, droidTexture);
+        droid.getShot().setGraphic(gl, this.shotTexture);
+       // droid.getShot().setGraphic(gl, droidTexture);
 
     }
 
