@@ -78,6 +78,8 @@ public class Shot extends Charactor{
 
     public void Hit(){
         this.isShotStart = false;
+        this.x = 3.0f;
+        this.y = 3.0f;
         //弾けるエフェクト
         //敵、doroidはフェードアウトすること
 

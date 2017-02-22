@@ -1,7 +1,6 @@
 package com.starcompany.openglsample;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.util.Log;
@@ -19,23 +18,14 @@ import javax.microedition.khronos.opengles.GL10;
 public class DroidWars implements  GLSurfaceView.Renderer{
     private static final String TAG = DroidWars.class.getSimpleName();
     public static final int TARGET_NUM = 36;
-    public static final int BLOCK_NUM = 6;
+    public static final int BLOCK_NUM = 4;
     private static final int GAME_INTERVAL = 60;
     private int score;
     private Context context;
     private int width;
     private int height;
 
-    private int bgTexture;
-    private int enemyTexture;
-    private int droidTexture;
-    private int blockTexture;
-    private int ufoTexture;
-    private int shotTexture;
 
-    private int mNumberTexture;
-    private int mGameOverTexture;//ゲームオーバー用テクスチャ
-    private int mParticleTexture;//パーティクル用テクスチャ
 
     private ParticleSystem particleSystem;
     private Enemy[] enemies = new Enemy[TARGET_NUM];
@@ -97,53 +87,20 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+        //GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         this.renderer.renderMain();
         Shot shot = this.droid.getShot();
-        this.touchEvent.isPointInside(shot.getX(), shot.getY());
+        this.renderer.isPointInside(shot.getX(), shot.getY());
     }
 
-    //テクスチャを読み込むメソッド
-    private void loadTextures(GL10 gl) {
-        Resources res = context.getResources();
-        this.enemyTexture = GraphicUtil.loadTexture(gl, res, R.drawable.fly);
-        this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
-        this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.droid2);
-        this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
-        this.shotTexture = GraphicUtil.loadTexture(gl, res, R.drawable.shot);
-
-        /*
-        this.mNumberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number_texture);
-        if (mNumberTexture == 0) {
-            Log.e(getClass().toString(), "load texture error! number_texture");
-        }
-        this.mGameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
-        if (mGameOverTexture == 0) {
-            Log.e(getClass().toString(), "load texture error! game_over");
-        }
-        this.mParticleTexture = GraphicUtil.loadTexture(gl, res, R.drawable.particle_blue);
-        if (mParticleTexture == 0) {
-            Log.e(getClass().toString(), "load texture error! particle_blue");
-        }
-        */
-    }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         this.width = width;
         this.height = height;
         DWGlobal.gl = gl;
-        loadTextures(gl);
-        for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].setGraphic(gl, this.enemyTexture);
-        }
-        for (int i = 0; i < BLOCK_NUM; i++) {
-            blocks[i].setGraphic(gl, this.blockTexture);
-        }
-        droid.setGraphic(gl, this.droidTexture);
-        droid.getShot().setGraphic(gl, this.shotTexture);
-       // droid.getShot().setGraphic(gl, droidTexture);
-
+        this.renderer.loadTextures(gl, this.context);
+        this.renderer.setGraphicTexture();
     }
 
     @Override

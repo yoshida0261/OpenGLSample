@@ -14,8 +14,8 @@ public class Ufo extends Charactor {
      */
     @Override
     public void move() {
-        this.x = this.x + 0.01f;
-        if (this.x >=  2.0f) this.x -= 4.0f;
+        this.x = this.x - 0.01f;
+        if (this.x <= -2.0f) this.x += 4.0f;
     }
 
 

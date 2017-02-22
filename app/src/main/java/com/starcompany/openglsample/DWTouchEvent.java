@@ -4,8 +4,6 @@ import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
 import com.starcompany.openglsample.Charactor.Shot;
 
-import static com.starcompany.openglsample.DroidWars.TARGET_NUM;
-
 public class DWTouchEvent {
     private static final String TAG = DWTouchEvent.class.getSimpleName();
 
@@ -16,21 +14,6 @@ public class DWTouchEvent {
     public DWTouchEvent(Droidkun droid, Enemy[] enemies){
         this.droid = droid;
         this.enemies = enemies;
-    }
-
-    public void isPointInside(float x, float y)
-    {
-        Shot shot = droid.getShot();
-        for (int i = 0; i < TARGET_NUM; i++) {
-
-            if (shot.isShotState() == true && enemies[i].isPointInside(x, y)) {
-                enemies[i].x = 3.0f;
-                enemies[i].y = 3.0f;
-                shot.Hit();
-            }
-
-        }
-
     }
 
     public void onTouch(float x, float y) {
