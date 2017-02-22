@@ -25,12 +25,14 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private int width;
     private int height;
 
-
-
     private ParticleSystem particleSystem;
-    private Enemy[] enemies = new Enemy[TARGET_NUM];
+  //  private Enemy[] enemies = new Enemy[TARGET_NUM];
+  //  private Droidkun droid = null;
+ //   private Block[] blocks = new Block[BLOCK_NUM];
+    private Enemy[] enemies = null;
     private Droidkun droid = null;
-    private Block[] blocks = new Block[BLOCK_NUM];
+    private Block[] blocks = null;
+
     private DWTouchEvent touchEvent;
     private DWRenderer renderer;
 
@@ -46,12 +48,15 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     }
 
     public void startNewGame() {
-        this.renderer.initializeCharacter();
         this.score = 0;
         this.startTime = System.currentTimeMillis();
         this.gameOverFlag = false;
+        this.renderer = new DWRenderer();
+        this.renderer.initializeCharacter();
+        droid = this.renderer.getDroidInstance();
+        enemies = this.renderer.getEnemyInstance();
+        blocks = this.renderer.getBlocksInstance();
         this.touchEvent = new DWTouchEvent(droid, enemies);
-        this.renderer = new DWRenderer(droid, enemies, blocks);
     }
 
     @Override

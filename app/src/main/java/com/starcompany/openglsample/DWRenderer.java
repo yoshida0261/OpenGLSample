@@ -20,8 +20,21 @@ public class DWRenderer {
     private static final String TAG = DWRenderer.class.getSimpleName();
 
     private Droidkun droid;
-    private Enemy[] enemies;
-    private Block[] blocks;
+    private Enemy[] enemies = new Enemy[TARGET_NUM];
+    private Block[] blocks = new Block[BLOCK_NUM];
+
+    public Droidkun getDroidInstance(){
+        return  droid;
+    }
+
+    public Enemy[] getEnemyInstance(){
+        return enemies;
+    }
+
+    public Block[] getBlocksInstance(){
+        return blocks;
+    }
+
 
     private int bgTexture;
     private int enemyTexture;
@@ -34,11 +47,6 @@ public class DWRenderer {
     private int mParticleTexture;//パーティクル用テクスチャ
 
 
-    public DWRenderer(Droidkun droid, Enemy[] enemies, Block[] blocks){
-        this.droid = droid;
-        this.enemies = enemies;
-        this.blocks = blocks;
-    }
 
     public void initializeCharacter()
     {
