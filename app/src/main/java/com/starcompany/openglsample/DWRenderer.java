@@ -54,18 +54,22 @@ public class DWRenderer {
 
         float y = 0.7f;
         int count = 0;
+
         for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i] = new Enemy(-0.9f +(0.16f * count), y, 0.1f, 0.1f, 0.02f, 0);
+            float posX = -0.8f +(0.33f * count);
+            enemies[i] = new Enemy(posX, y, 0.2f, 0.2f, 0.02f, 0);
             count += 1;
-            if(i == 11 || i == 23){
+            if(i == 5 || i == 11){
                 count = 0;
-                y += 0.15;
+                y += 0.21;
             }
         }
 
-        for(int i =0;i<BLOCK_NUM;i++){
-            blocks[i] = new Block(-0.75f + 0.3f * i , -0.8f, 0, 0.3f, 0.02f, 0);
-        }
+        blocks[0] = new Block(-0.7f, -0.8f, 0, 0.3f, 0.02f, 0);
+        blocks[1] = new Block(-0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
+        blocks[2] = new Block( 0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
+        blocks[3] = new Block( 0.7f, -0.8f, 0, 0.3f, 0.02f, 0);
+
     }
 
     public void setGraphicTexture(){
@@ -109,7 +113,7 @@ public class DWRenderer {
     public void renderMain(){
 
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
-        //moveEnemy();
+        moveEnemy();
         for (int i = 0; i < TARGET_NUM; i++) {
             enemies[i].draw();
         }
@@ -186,6 +190,7 @@ public class DWRenderer {
         Random rand = DWGlobal.rand; // randamで弾だし
         Enemy[] enemies = this.enemies;
 
+        // wait
         for (int i = 0; i < TARGET_NUM; i++) {
             enemies[i].move();
         }

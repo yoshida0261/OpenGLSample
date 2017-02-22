@@ -16,9 +16,12 @@ public class Enemy extends Charactor {
         //this.y = this.y + (float)Math.sin(theta) * speed;
 
         //ワープ処理
-        if (this.x >=  2.0f) this.x -= 4.0f;
-        if (this.x <= -2.0f) this.x += 4.0f;
-        if (this.y >=  2.5f) this.y -= 5.0f;
+        if (this.x >=  1.0f) {
+            this.x =   -1.0f;
+            this.y -=  0.21f;
+        }
+      //  if (this.x <= -2.0f) this.x += 4.0f;
+      //  if (this.y >=  2.5f) this.y -= 5.0f;
         if (this.y <= -2.5f) this.y += 5.0f;
     }
 

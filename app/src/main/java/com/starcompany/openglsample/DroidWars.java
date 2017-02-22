@@ -17,7 +17,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DroidWars implements  GLSurfaceView.Renderer{
     private static final String TAG = DroidWars.class.getSimpleName();
-    public static final int TARGET_NUM = 36;
+    public static final int TARGET_NUM = 18;
     public static final int BLOCK_NUM = 4;
     private static final int GAME_INTERVAL = 60;
     private int score;
