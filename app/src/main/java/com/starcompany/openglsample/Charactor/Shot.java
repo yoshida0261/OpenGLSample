@@ -13,11 +13,7 @@ public class Shot extends Charactor{
 
 
     public Shot(float x, float y, float angle, float size, float speed, float turnAngle) {
-        //初期表示は何もしない
         super(x, y, angle, size, speed, turnAngle);
-        x = 3.0f;
-        y = 3.0f;
-
     }
 
 
@@ -50,9 +46,11 @@ public class Shot extends Charactor{
             this.y = this.y + this.shotType;
             if(y > 3.0f || y < -3.0f){
                 isShotStart = false;
-
             }
+            return;
         }
+        x = 3.0f;
+        y = 3.0f;
     }
 
 

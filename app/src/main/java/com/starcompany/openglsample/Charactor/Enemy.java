@@ -9,15 +9,21 @@ public class Enemy extends Charactor {
         super(x,y,angle,size,speed,turnAngle);
     }
 
+    private int direction = 1;
     @Override
     public void move() {
         //float theta = angle / 180.0f * (float)Math.PI;
-        this.x = this.x + 0.01f;
+        this.x = this.x + 0.005f * direction;
+
         //this.y = this.y + (float)Math.sin(theta) * speed;
 
         //ワープ処理
-        if (this.x >=  1.0f) {
-            this.x =   -1.0f;
+        if (this.x > 0.9f) {
+            direction = -1;
+            this.y -=  0.21f;
+        }
+        if (this.x < -0.9f){
+            direction = 1;
             this.y -=  0.21f;
         }
       //  if (this.x <= -2.0f) this.x += 4.0f;
