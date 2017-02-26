@@ -45,6 +45,7 @@ public class DWRenderer {
     private int numberTexture;
     private int mGameOverTexture;//ゲームオーバー用テクスチャ
     private int mParticleTexture;//パーティクル用テクスチャ
+    private int bombTexture;
 
 
 
@@ -93,6 +94,7 @@ public class DWRenderer {
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
         this.shotTexture = GraphicUtil.loadTexture(gl, res, R.drawable.shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
+        this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
 
 
         /*
@@ -145,7 +147,7 @@ public class DWRenderer {
                 enemies[i].x = 3.0f;
                 enemies[i].y = 3.0f;
 
-                shot.Hit();
+                shot.Hit(this.bombTexture);
             }
         }
     }
