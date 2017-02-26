@@ -20,15 +20,11 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     public static final int TARGET_NUM = 18;
     public static final int BLOCK_NUM = 4;
     private static final int GAME_INTERVAL = 60;
-    //private int score;
     private Context context;
     private int width;
     private int height;
 
     private ParticleSystem particleSystem;
-  //  private Enemy[] enemies = new Enemy[TARGET_NUM];
-  //  private Droidkun droid = null;
- //   private Block[] blocks = new Block[BLOCK_NUM];
     private Enemy[] enemies = null;
     private Droidkun droid = null;
     private Block[] blocks = null;
@@ -67,7 +63,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
 
-        gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        gl.glClearColor(0f, 0f, 0f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         //GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
