@@ -14,7 +14,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GraphicUtil {
     private static final String TAG = GraphicUtil.class.getSimpleName();
-    public static final void drawNumbers(GL10 gl, float x, float y, float width, float height, int texture, int number, int figures, float r, float g, float b, float a) {
+    public static final void drawNumbers(GL10 gl, float x, float y, float width, float height, int texture, int number, int figures) {
         float totalWidth = width * (float)figures;//n文字分の横幅
         float rightX = x + (totalWidth * 0.5f);//右端のx座標
         float fig1X = rightX - width * 0.5f;//一番右の桁の中心のx座標
