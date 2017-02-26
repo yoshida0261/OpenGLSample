@@ -44,7 +44,7 @@ public class DWRenderer {
     private int ufoTexture;
     private int shotTexture;
     private int numberTexture;
-    private int mGameOverTexture;//ゲームオーバー用テクスチャ
+    private int gameOverTexture;//ゲームオーバー用テクスチャ
     private int mParticleTexture;//パーティクル用テクスチャ
     private int bombTexture;
 
@@ -97,17 +97,9 @@ public class DWRenderer {
         this.shotTexture = GraphicUtil.loadTexture(gl, res, R.drawable.shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
         this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
-
+        this.gameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
 
         /*
-        this.mNumberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number_texture);
-        if (mNumberTexture == 0) {
-            Log.e(getClass().toString(), "load texture error! number_texture");
-        }
-        this.mGameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
-        if (mGameOverTexture == 0) {
-            Log.e(getClass().toString(), "load texture error! game_over");
-        }
         this.mParticleTexture = GraphicUtil.loadTexture(gl, res, R.drawable.particle_blue);
         if (mParticleTexture == 0) {
             Log.e(getClass().toString(), "load texture error! particle_blue");
@@ -122,8 +114,16 @@ public class DWRenderer {
         GraphicUtil.drawNumbers(gl, -0.5f, 1.25f, 0.125f, 0.125f, numberTexture, score, 4);
 
         moveEnemy();
+        int die = 0;
         for (int i = 0; i < TARGET_NUM; i++) {
             enemies[i].draw();
+            if(enemies[i].isDie()==true){
+                die++;
+            }
+            if(TARGET_NUM == die){
+                GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+
+            }
         }
         // todo enemis.shot
 
@@ -135,6 +135,8 @@ public class DWRenderer {
         droid.getShot().move();
         droid.getShot().draw();
         gl.glDisable(GL10.GL_BLEND);
+
+
 
     }
 
@@ -153,7 +155,7 @@ public class DWRenderer {
                 // enemies　フェードアウト
                 enemies[i].x = 3.0f;
                 enemies[i].y = 3.0f;
-                enemies[i].dead();
+                enemies[i].died();
                 score += 10;
 
                 shot.Hit(this.bombTexture);
