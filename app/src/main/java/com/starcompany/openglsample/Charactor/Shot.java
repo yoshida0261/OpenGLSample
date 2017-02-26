@@ -80,7 +80,8 @@ public class Shot extends Charactor{
 
     public void Hit(int bombTexture){
         this.isShotStart = false;
-        GraphicUtil.drawTexture(gl, x, y, 0.1f, 0.1f, bombTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+
+        GraphicUtil.drawTexture(gl, x, y, 0.3f, 0.3f, bombTexture, 1.0f, 1.0f, 1.0f, 1.0f);
 
         this.x = 3.0f;
         this.y = 3.0f;

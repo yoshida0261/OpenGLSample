@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
 
         outState.putLong("startTime", droidWars.getStartTime());//開始時間
         outState.putLong("pauseTime", System.currentTimeMillis());//onPauseした時間
-        outState.putInt("score", droidWars.getScore());//スコア
+        //outState.putInt("score", droidWars.getScore());//スコア
     }
 
 

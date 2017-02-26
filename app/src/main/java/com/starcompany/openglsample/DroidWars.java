@@ -20,7 +20,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     public static final int TARGET_NUM = 18;
     public static final int BLOCK_NUM = 4;
     private static final int GAME_INTERVAL = 60;
-    private int score;
+    //private int score;
     private Context context;
     private int width;
     private int height;
@@ -48,7 +48,6 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     }
 
     public void startNewGame() {
-        this.score = 0;
         this.startTime = System.currentTimeMillis();
         this.gameOverFlag = false;
         this.renderer = new DWRenderer();
@@ -109,9 +108,6 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         return startTime;
     }
 
-    public int getScore() {
-        return score;
-    }
 
     public void setScore(int score) {
         score = score;

@@ -9,6 +9,10 @@ public class Enemy extends Charactor {
         super(x,y,angle,size,speed,turnAngle);
     }
 
+    private boolean isDead = false;
+    public void dead(){
+        isDead = true;
+    }
     private int direction = 1;
     @Override
     public void move() {
@@ -16,6 +20,10 @@ public class Enemy extends Charactor {
         this.x = this.x + 0.005f * direction;
 
         //this.y = this.y + (float)Math.sin(theta) * speed;
+        if(isDead){
+            return;
+        }
+
 
         //ワープ処理
         if (this.x > 0.9f) {

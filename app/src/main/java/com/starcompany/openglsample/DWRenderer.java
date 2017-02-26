@@ -20,6 +20,7 @@ public class DWRenderer {
     private static final String TAG = DWRenderer.class.getSimpleName();
 
     private Droidkun droid;
+    private int score;
     private Enemy[] enemies = new Enemy[TARGET_NUM];
     private Block[] blocks = new Block[BLOCK_NUM];
 
@@ -70,6 +71,7 @@ public class DWRenderer {
         blocks[1] = new Block(-0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
         blocks[2] = new Block( 0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
         blocks[3] = new Block( 0.7f, -0.8f, 0, 0.3f, 0.02f, 0);
+        score = 0;
 
     }
 
@@ -116,8 +118,9 @@ public class DWRenderer {
 
     public void renderMain(){
 
-        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
-        GraphicUtil.drawNumbers(gl, -0.5f, 1.25f, 0.125f, 0.125f, numberTexture, 100, 4);
+       // GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+        GraphicUtil.drawNumbers(gl, -0.5f, 1.25f, 0.125f, 0.125f, numberTexture, score, 4);
+
         moveEnemy();
         for (int i = 0; i < TARGET_NUM; i++) {
             enemies[i].draw();
@@ -127,15 +130,19 @@ public class DWRenderer {
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].draw();
         }
-
-
         droid.move();
         droid.draw();
         droid.getShot().move();
         droid.getShot().draw();
         gl.glDisable(GL10.GL_BLEND);
+
     }
 
+    /**
+     * 当たり判定
+     * @param x
+     * @param y
+     */
     public void isPointInside(float x, float y)
     {
         Shot shot = droid.getShot();
@@ -146,6 +153,8 @@ public class DWRenderer {
                 // enemies　フェードアウト
                 enemies[i].x = 3.0f;
                 enemies[i].y = 3.0f;
+                enemies[i].dead();
+                score += 10;
 
                 shot.Hit(this.bombTexture);
             }
