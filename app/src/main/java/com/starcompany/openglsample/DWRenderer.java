@@ -109,6 +109,17 @@ public class DWRenderer {
         */
     }
 
+    /**
+     * 敵とぶつかるか、敵のたまとぶつかるとゲームオーバー
+     */
+    private void gameOver(){
+        for (int i = 0; i < TARGET_NUM; i++) {
+                enemies[i].x = 3.0f;
+                enemies[i].y = 3.0f;
+                enemies[i].died();
+        }
+        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+    }
 
     /**
      * Game Clear画像表示後、
@@ -118,6 +129,7 @@ public class DWRenderer {
 
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
 
+        // TODO エンディング処理
     }
 
     public void renderMain(){
@@ -196,8 +208,8 @@ public class DWRenderer {
 
         for (int i = 0; i < TARGET_NUM; i++) {
             if (enemies[i].isPointInside(x, -1.2f)) {
-                gameClear();
-                return;//多分ここにはこない
+                gameOver();
+                return;
 
 
             }
