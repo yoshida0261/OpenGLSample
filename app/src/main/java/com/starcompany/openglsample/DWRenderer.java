@@ -52,7 +52,8 @@ public class DWRenderer {
 
     public void initializeCharacter()
     {
-        droid = new Droidkun(0, -0.5f, 0f, 0.5f, 0.02f, 0);
+        // drawでy座標を固定描画しているのでここでの変更は無意味
+        droid = new Droidkun(0, -0.9f, 0f, 0.5f, 0.02f, 0);
 
         float y = 0.7f;
         int count = 0;
@@ -148,6 +149,20 @@ public class DWRenderer {
     public void isPointInside(float x, float y)
     {
         Shot shot = droid.getShot();
+
+        for(int i=0; i< BLOCK_NUM; i++){
+            if (shot.isShotState() == true && blocks[i].isPointInside(x, y)) {
+
+                // blocks　３回位で消えるようにする（予定）
+                blocks[i].x = 3.0f;
+                blocks[i].y = 3.0f;
+
+                shot.Hit(this.bombTexture);
+                //壁を壊したからそこまで
+                return;
+            }
+        }
+
         for (int i = 0; i < TARGET_NUM; i++) {
 
             if (shot.isShotState() == true && enemies[i].isPointInside(x, y)) {
@@ -161,6 +176,8 @@ public class DWRenderer {
                 shot.Hit(this.bombTexture);
             }
         }
+
+
     }
 
 

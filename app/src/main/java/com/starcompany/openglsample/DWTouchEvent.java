@@ -2,7 +2,6 @@ package com.starcompany.openglsample;
 
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
-import com.starcompany.openglsample.Charactor.Shot;
 
 public class DWTouchEvent {
     private static final String TAG = DWTouchEvent.class.getSimpleName();
@@ -18,10 +17,12 @@ public class DWTouchEvent {
 
     public void onTouch(float x, float y) {
 
-        droid.move(x);
 
-        Shot shot = droid.getShot();
-        shot.droidShot(x, -1.0f); //droidと同じ高さ
+        /*Shot shot = droid.getShot();
+        shot.droidShot(x, -1.2f); //droidと同じ高さ
+*/
+        droid.attack();
+        droid.move(x);
 
         // すべての標的との当たり判定をします
        /* for (int i = 0; i < TARGET_NUM; i++) {

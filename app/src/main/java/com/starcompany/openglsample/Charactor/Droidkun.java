@@ -49,7 +49,7 @@ public class Droidkun  extends Charactor {
     @Override
     public void draw() {
 
-        GraphicUtil.drawTexture(gl, x, -1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
+        GraphicUtil.drawTexture(gl, x, -1.2f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
         /*
@@ -76,7 +76,7 @@ public class Droidkun  extends Charactor {
         return shot.isPointInside(x,y);
     }
 
-    public void Attack(float x, float y){
+    public void attack(){
         shot.droidShot(x,y);
     }
 
