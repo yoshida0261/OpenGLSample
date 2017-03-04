@@ -11,6 +11,10 @@ public class Droidkun  extends Charactor {
     private float moveX;
     private Shot shot = null;
 
+    public float getX(){
+        return  x;
+    }
+
     public Droidkun(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
 

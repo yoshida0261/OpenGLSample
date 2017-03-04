@@ -15,6 +15,7 @@ import javax.microedition.khronos.opengles.GL10;
 import static com.starcompany.openglsample.DWGlobal.gl;
 import static com.starcompany.openglsample.DroidWars.BLOCK_NUM;
 import static com.starcompany.openglsample.DroidWars.TARGET_NUM;
+import static com.starcompany.openglsample.R.drawable.shot;
 
 public class DWRenderer {
     private static final String TAG = DWRenderer.class.getSimpleName();
@@ -95,7 +96,7 @@ public class DWRenderer {
         this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
         this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.droid2);
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
-        this.shotTexture = GraphicUtil.loadTexture(gl, res, R.drawable.shot);
+        this.shotTexture = GraphicUtil.loadTexture(gl, res, shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
         this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
         this.gameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
@@ -108,6 +109,16 @@ public class DWRenderer {
         */
     }
 
+
+    /**
+     * Game Clear画像表示後、
+     * エンディング
+     */
+    private void gameClear(){
+
+        GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+
+    }
 
     public void renderMain(){
 
@@ -122,7 +133,7 @@ public class DWRenderer {
                 die++;
             }
             if(TARGET_NUM == die){
-                GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
+                gameClear();
 
             }
         }
@@ -143,10 +154,13 @@ public class DWRenderer {
 
     /**
      * 当たり判定
+     *
+     *
+     *
      * @param x
      * @param y
      */
-    public void isPointInside(float x, float y)
+    public void isShotPointInside(float x, float y)
     {
         Shot shot = droid.getShot();
 
@@ -162,7 +176,6 @@ public class DWRenderer {
                 return;
             }
         }
-
         for (int i = 0; i < TARGET_NUM; i++) {
 
             if (shot.isShotState() == true && enemies[i].isPointInside(x, y)) {
@@ -176,8 +189,19 @@ public class DWRenderer {
                 shot.Hit(this.bombTexture);
             }
         }
+    }
+
+    public void isDroidPointInside(){
+        float x = droid.getX();
+
+        for (int i = 0; i < TARGET_NUM; i++) {
+            if (enemies[i].isPointInside(x, -1.2f)) {
+                gameClear();
+                return;//多分ここにはこない
 
 
+            }
+        }
     }
 
 

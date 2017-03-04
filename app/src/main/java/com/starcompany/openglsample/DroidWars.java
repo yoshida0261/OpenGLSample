@@ -69,7 +69,9 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         //GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         this.renderer.renderMain();
         Shot shot = this.droid.getShot();
-        this.renderer.isPointInside(shot.getX(), shot.getY());
+
+        this.renderer.isShotPointInside(shot.getX(), shot.getY());
+        this.renderer.isDroidPointInside();
     }
 
 
