@@ -1,8 +1,9 @@
 package com.starcompany.openglsample;
 
-import android.view.*;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 
 public class DWGLSurfaceView extends GLSurfaceView{
     private static final String TAG = DWGLSurfaceView.class.getSimpleName();
@@ -34,6 +35,11 @@ public class DWGLSurfaceView extends GLSurfaceView{
         float x = (event.getX() / (float) width) * 2.0f - 1.0f;
         float y = (event.getY() / (float) height) * -3.0f + 1.5f;
         mMyRenderer.touched(x, y);
+
+        // 導入してみたが、死ぬので保留
+        //Vibrator vibrator = (Vibrator) DWGlobal.mainActivity.getSystemService(VIBRATOR_SERVICE);
+        //vibrator.vibrate(10);
+
         return false;
     }
 }

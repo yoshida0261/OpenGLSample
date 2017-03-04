@@ -95,6 +95,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         if (gameOverFlag) {
             return;
         }
+
         touchEvent.onTouch(x,y);
     }
 

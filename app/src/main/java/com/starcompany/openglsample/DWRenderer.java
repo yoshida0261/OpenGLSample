@@ -6,9 +6,8 @@ import android.content.res.Resources;
 import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
+import com.starcompany.openglsample.Charactor.EnemyManager;
 import com.starcompany.openglsample.Charactor.Shot;
-
-import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -23,6 +22,7 @@ public class DWRenderer {
     private Droidkun droid;
     private int score;
     private Enemy[] enemies = new Enemy[TARGET_NUM];
+    private EnemyManager enemmyManager = new EnemyManager();
     private Block[] blocks = new Block[BLOCK_NUM];
 
     public Droidkun getDroidInstance(){
@@ -55,20 +55,7 @@ public class DWRenderer {
     {
         // drawでy座標を固定描画しているのでここでの変更は無意味
         droid = new Droidkun(0, -0.9f, 0f, 0.5f, 0.02f, 0);
-
-        float y = 0.7f;
-        int count = 0;
-
-        for (int i = 0; i < TARGET_NUM; i++) {
-            float posX = -0.8f +(0.33f * count);
-            enemies[i] = new Enemy(posX, y, 0.2f, 0.2f, 0.02f, 0);
-            count += 1;
-            if(i == 5 || i == 11){
-                count = 0;
-                y += 0.21;
-            }
-        }
-
+        enemmyManager.initializeCharacter();;
         blocks[0] = new Block(-0.7f, -0.8f, 0, 0.3f, 0.02f, 0);
         blocks[1] = new Block(-0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
         blocks[2] = new Block( 0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
@@ -79,9 +66,7 @@ public class DWRenderer {
 
     public void setGraphicTexture(){
 
-        for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].setGraphic(gl, this.enemyTexture);
-        }
+        enemmyManager.setGraphicTexture(this.enemyTexture, bombTexture);
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].setGraphic(gl, this.blockTexture);
         }
@@ -113,11 +98,7 @@ public class DWRenderer {
      * 敵とぶつかるか、敵のたまとぶつかるとゲームオーバー
      */
     private void gameOver(){
-        for (int i = 0; i < TARGET_NUM; i++) {
-                enemies[i].x = 3.0f;
-                enemies[i].y = 3.0f;
-                enemies[i].died();
-        }
+        enemmyManager.gameOver();
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
@@ -134,20 +115,12 @@ public class DWRenderer {
 
     public void renderMain(){
 
-       // GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         GraphicUtil.drawNumbers(gl, -0.5f, 1.25f, 0.125f, 0.125f, numberTexture, score, 4);
 
-        moveEnemy();
-        int die = 0;
-        for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].draw();
-            if(enemies[i].isDie()==true){
-                die++;
-            }
-            if(TARGET_NUM == die){
-                gameClear();
+        enemmyManager.move();
 
-            }
+        if(enemmyManager.isGameClear() == true){
+            gameClear();
         }
         // todo enemis.shot
 
@@ -159,9 +132,6 @@ public class DWRenderer {
         droid.getShot().move();
         droid.getShot().draw();
         gl.glDisable(GL10.GL_BLEND);
-
-
-
     }
 
     /**
@@ -188,31 +158,16 @@ public class DWRenderer {
                 return;
             }
         }
-        for (int i = 0; i < TARGET_NUM; i++) {
-
-            if (shot.isShotState() == true && enemies[i].isPointInside(x, y)) {
-
-                // enemies　フェードアウト
-                enemies[i].x = 3.0f;
-                enemies[i].y = 3.0f;
-                enemies[i].died();
-                score += 10;
-
-                shot.Hit(this.bombTexture);
-            }
+        if(enemmyManager.isShotPointInsite(shot,x,y) == true){
+            score+=10;
         }
     }
 
     public void isDroidPointInside(){
         float x = droid.getX();
 
-        for (int i = 0; i < TARGET_NUM; i++) {
-            if (enemies[i].isPointInside(x, -1.2f)) {
-                gameOver();
-                return;
-
-
-            }
+        if(enemmyManager.isDroidPointInsite(x) == true){
+            gameOver();
         }
     }
 
@@ -245,26 +200,8 @@ public class DWRenderer {
                 });
             }
         }*/
-
-
-
     }
 
-    /**
-     * 左端から右端へ
-     * 右端へ行った後は１キャラ分ススメて左端に戻る
-     * 最後Droidkunとぶつかったら終わり
-     */
-    private void moveEnemy()
-    {
-        Random rand = DWGlobal.rand; // randamで弾だし
-        Enemy[] enemies = this.enemies;
-
-        // wait
-        for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].move();
-        }
-    }
 
 }
  

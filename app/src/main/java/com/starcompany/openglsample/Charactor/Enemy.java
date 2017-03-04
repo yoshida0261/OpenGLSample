@@ -29,7 +29,6 @@ public class Enemy extends Charactor {
             return;
         }
 
-
         //ワープ処理
         if (this.x > 0.9f) {
             direction = -1;
