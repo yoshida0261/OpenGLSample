@@ -8,6 +8,16 @@ public class Enemy extends Charactor {
     public Enemy(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
     }
+    private int line;
+
+    /**
+     * 自分の位置を指定
+     * @param line
+     */
+    public void setLine(int line){
+        this.line = line;
+    }
+
 
     private boolean dead = false;
     public void died(){
@@ -19,10 +29,15 @@ public class Enemy extends Charactor {
 
 
     private int direction = 1;
+    private int wait = 0;
+
+
     @Override
     public void move() {
         //float theta = angle / 180.0f * (float)Math.PI;
-        this.x = this.x + 0.005f * direction;
+        float x = this.x;
+
+        //this.x = this.x + 0.005f * direction;
 
         //this.y = this.y + (float)Math.sin(theta) * speed;
         if(dead){
@@ -30,16 +45,26 @@ public class Enemy extends Charactor {
         }
 
         //ワープ処理
-        if (this.x > 0.9f) {
+        x = x + 0.015f * direction;
+        if (x > 0.9f) {
             direction = -1;
             this.y -=  0.21f;
         }
-        if (this.x < -0.9f){
+        if (x < -0.9f){
             direction = 1;
             this.y -=  0.21f;
         }
-      //  if (this.x <= -2.0f) this.x += 4.0f;
-      //  if (this.y >=  2.5f) this.y -= 5.0f;
+        wait++;
+        if(wait < 30){
+            return;
+        }
+        wait = 0;
+
+
+        this.x = x;
+
+
+        //改行
         if (this.y <= -2.5f) this.y += 5.0f;
     }
 

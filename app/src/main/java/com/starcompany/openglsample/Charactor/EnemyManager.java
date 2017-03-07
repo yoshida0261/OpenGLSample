@@ -12,6 +12,7 @@ public class EnemyManager {
     public void initializeCharacter(){
         float posY = 0.7f;
         int count = 0;
+        int line =0;
 
         for (int i = 0; i < TARGET_NUM; i++) {
             float posX = -0.8f +(0.22f * count);
@@ -22,11 +23,14 @@ public class EnemyManager {
             }
 
             enemies[i] = new Enemy(posX, posY, 0.2f, 0.2f, 0.02f, 0);
+            enemies[i].setLine(line);
             count += 1;
 
             if(i == 5 || i == 11){
+                line++;
                 count = 0;
                 posY += 0.21;
+
             }
         }
     }
@@ -105,7 +109,7 @@ public class EnemyManager {
      */
     public void move() {
         //Random rand = DWGlobal.rand; // randamで弾だし
-        Enemy[] enemies = this.enemies;
+        // Enemy[] enemies = this.enemies;
 
         // wait
         for (int i = 0; i < TARGET_NUM; i++) {
