@@ -9,7 +9,6 @@ import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
 import com.starcompany.openglsample.Charactor.Enemy;
 import com.starcompany.openglsample.Charactor.Shot;
-import com.starcompany.openglsample.Effect.ParticleSystem;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -24,7 +23,6 @@ public class DroidWars implements  GLSurfaceView.Renderer{
     private int width;
     private int height;
 
-    private ParticleSystem particleSystem;
     private Enemy[] enemies = null;
     private Droidkun droid = null;
     private Block[] blocks = null;
@@ -39,7 +37,6 @@ public class DroidWars implements  GLSurfaceView.Renderer{
 
     public DroidWars(Context context) {
         this.context = context;
-        this.particleSystem = new ParticleSystem(300, 30);
         startNewGame();
     }
 

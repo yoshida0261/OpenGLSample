@@ -46,7 +46,6 @@ public class DWRenderer {
     private int shotTexture;
     private int numberTexture;
     private int gameOverTexture;//ゲームオーバー用テクスチャ
-    private int mParticleTexture;//パーティクル用テクスチャ
     private int bombTexture;
 
 
@@ -85,13 +84,6 @@ public class DWRenderer {
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
         this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
         this.gameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
-
-        /*
-        this.mParticleTexture = GraphicUtil.loadTexture(gl, res, R.drawable.particle_blue);
-        if (mParticleTexture == 0) {
-            Log.e(getClass().toString(), "load texture error! particle_blue");
-        }
-        */
     }
 
     /**
