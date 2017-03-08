@@ -34,10 +34,17 @@ public class EnemyManager {
         }
     }
 
-    public void setGraphicTexture(int enemyTexture, int bombTexture)
+    public void setGraphicTexture(int enemy1, int enemy2, int enemy3, int bombTexture)
     {
         for (int i = 0; i < TARGET_NUM; i++) {
-            enemies[i].setGraphic(gl, enemyTexture);
+            if(i < 6) {
+                enemies[i].setGraphic(gl, enemy1);
+            }else if(i < 12){
+                enemies[i].setGraphic(gl, enemy2);
+            }else{
+                enemies[i].setGraphic(gl, enemy3);
+            }
+
         }
         this.bombTexture = bombTexture;
     }

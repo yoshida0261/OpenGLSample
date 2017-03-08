@@ -40,9 +40,14 @@ public class DWRenderer {
 
     private int bgTexture;
     private int enemyTexture;
+    private int enemy2Texture;
+    private int enemy3Texture;
+
+
     private int droidTexture;
     private int blockTexture;
     private int ufoTexture;
+    private int ufoTexture2;
     private int shotTexture;
     private int numberTexture;
     private int gameOverTexture;//ゲームオーバー用テクスチャ
@@ -65,7 +70,7 @@ public class DWRenderer {
 
     public void setGraphicTexture(){
 
-        enemmyManager.setGraphicTexture(this.enemyTexture, bombTexture);
+        enemmyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture);
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].setGraphic(gl, this.blockTexture);
         }
@@ -76,9 +81,11 @@ public class DWRenderer {
 
     public void loadTextures(GL10 gl, Context context) {
         Resources res = context.getResources();
-        this.enemyTexture = GraphicUtil.loadTexture(gl, res, R.drawable.octocat);
+        this.enemyTexture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line1);
+        this.enemy2Texture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line2);
+        this.enemy3Texture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line3);
         this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
-        this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.droid2);
+        this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.mydroid);
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
         this.shotTexture = GraphicUtil.loadTexture(gl, res, shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
