@@ -72,7 +72,7 @@ public class DWRenderer {
 
     public void setGraphicTexture(){
 
-        enemmyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture);
+        enemmyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture,  this.shotTexture);
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].setGraphic(gl, this.blockTexture);
         }

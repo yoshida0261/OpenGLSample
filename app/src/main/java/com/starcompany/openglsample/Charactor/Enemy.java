@@ -35,6 +35,9 @@ public class Enemy extends Charactor {
         front = true;
     }
 
+    public Shot getShot(){
+        return  shot;
+    }
 
     private int direction = 1;
     private int wait = 0;
@@ -93,9 +96,13 @@ public class Enemy extends Charactor {
     }
 
     public void attack(){
-        if(front) {
-            shot.enemyShot(x,y);
+        if(shot.isShotState() == false) {
+            shot.enemyShot(x, y);
+
         }
+        shot.move();
+        shot.draw();
+
     }
 
 

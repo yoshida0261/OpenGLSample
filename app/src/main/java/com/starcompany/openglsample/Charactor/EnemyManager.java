@@ -34,7 +34,7 @@ public class EnemyManager {
         }
     }
 
-    public void setGraphicTexture(int enemy1, int enemy2, int enemy3, int bombTexture)
+    public void setGraphicTexture(int enemy1, int enemy2, int enemy3, int bombTexture, int shot)
     {
         for (int i = 0; i < TARGET_NUM; i++) {
             if(i < 6) {
@@ -44,6 +44,7 @@ public class EnemyManager {
             }else{
                 enemies[i].setGraphic(gl, enemy3);
             }
+            enemies[i].getShot().setGraphic(gl, shot);
 
         }
         this.bombTexture = bombTexture;
@@ -151,6 +152,7 @@ public class EnemyManager {
             if(enemies[i].isLinefeed()){
                 lineFeed = true;
             }
+
             if(enemies[i].isFront()){
                 enemies[i].attack();
             }
@@ -165,12 +167,13 @@ public class EnemyManager {
 
 
         //弾発射のwait todo
+/*
         wait++;
         if(wait < 30){
             return;
         }
         wait = 0;
-
+*/
     }
 
 }

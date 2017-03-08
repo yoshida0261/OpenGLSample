@@ -24,7 +24,7 @@ public class Shot extends Charactor{
     public void enemyShot(float x, float y)
     {
         this.x = x;
-        this.y = y+0.2f;
+        this.y = y;
         this.isShotStart =true;
         this.shotType = enemyType;
 
@@ -33,7 +33,7 @@ public class Shot extends Charactor{
     public void droidShot(float x, float y)
     {
         this.x = x;
-        this.y = y-0.2f;
+        this.y = y-0.2f; // 自分の位置手前から撃つ
         this.isShotStart = true;
         this.shotType = droidType;
     }
