@@ -23,11 +23,13 @@ public class EnemyManager {
 
             enemies[i] = new Enemy(posX, posY, 0.2f, 0.2f, 0.02f, 0);
             count += 1;
+            if(i < 6){
+                enemies[i].setFront();
+            }
 
             if(i == 5 || i == 11){
                 count = 0;
                 posY += 0.21;
-
             }
         }
     }
@@ -71,21 +73,46 @@ public class EnemyManager {
         return  false;
     }
 
+
+    /**
+     * 被弾
+     * @param shot
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean isShotPointInsite(Shot shot, float x, float y){
+
+        if(shot.isShotState() == false){
+            return false;
+        }
+
         for (int i = 0; i < TARGET_NUM; i++) {
 
-            if (shot.isShotState() == true && enemies[i].isPointInside(x, y)) {
+            if (enemies[i].isPointInside(x, y)) {
                 // enemies　フェードアウト
                 enemies[i].x = 3.0f;
                 enemies[i].y = 3.0f;
                 enemies[i].died();
                 shot.Hit(this.bombTexture);
+
+                //後ろのやつが弾を撃てるように
+                if(i  + 6 < TARGET_NUM){
+                    int frontPos = i+6;
+                    enemies[frontPos].setFront();
+                }
+
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * ドロイド君とぶつかったか
+     * @param x
+     * @return
+     */
     public boolean isDroidPointInsite(float x)
     {
         for (int i = 0; i < TARGET_NUM; i++) {
@@ -97,12 +124,16 @@ public class EnemyManager {
     }
 
 
+    private int wait = 0;
 
     /**
      * 移動の実行
      * 左から右、　右から左へ
      * まったんまで誰かがたどり着いたら
      * 一ライン前に進む
+     *
+     * 最前列は弾を撃てる
+     * 打つかどうかはランダムにしたい。。
      */
     public void move() {
         //Random rand = DWGlobal.rand; // randamで弾だし
@@ -115,6 +146,9 @@ public class EnemyManager {
             if(enemies[i].isLinefeed()){
                 lineFeed = true;
             }
+            if(enemies[i].isFront()){
+                enemies[i].attack();
+            }
         }
         if(lineFeed == false){
             return;
@@ -122,6 +156,16 @@ public class EnemyManager {
         for (int i = 0; i<TARGET_NUM; i++) {
             enemies[i].LineFeed();
         }
+
+
+
+        //弾発射のwait todo
+        wait++;
+        if(wait < 30){
+            return;
+        }
+        wait = 0;
+
     }
 
 }

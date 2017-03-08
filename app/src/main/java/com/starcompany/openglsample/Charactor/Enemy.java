@@ -4,18 +4,32 @@ import com.starcompany.openglsample.GraphicUtil;
 
 public class Enemy extends Charactor {
     private static final String TAG = Enemy.class.getSimpleName();
+    private Shot shot = null;
 
     public Enemy(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
+        shot = new Shot(x,y,angle, size, speed, turnAngle);
+
     }
 
 
     private boolean dead = false;
     public void died(){
+        front = false;
         dead = true;
     }//死んだ
     public boolean isDie(){
         return dead;
+    }
+
+    private boolean front = false; //最前列にいると弾が出せる
+
+    public boolean isFront(){
+        return  front;
+    }
+
+    public void setFront(){
+        front = true;
     }
 
 
@@ -73,6 +87,12 @@ public class Enemy extends Charactor {
             GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 1.0f, 1.0f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
         }
         gl.glPopMatrix();
+    }
+
+    public void attack(){
+        if(front) {
+            shot.enemyShot(x,y);
+        }
     }
 
 

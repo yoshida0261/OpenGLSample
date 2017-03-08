@@ -60,7 +60,8 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
 
-        gl.glClearColor(0f, 0f, 0f, 1.0f);
+        //gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         //GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
