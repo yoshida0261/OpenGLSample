@@ -9,6 +9,7 @@ public class Shot extends Charactor{
     private float droidType = 0.03f;
     private boolean isShotStart = false;
     private float shotType;
+    private int bombTexture;
 
 
 
@@ -78,7 +79,11 @@ public class Shot extends Charactor{
         return  this.isShotStart;
     }
 
-    public void Hit(int bombTexture){
+    public void setBombTexture(int bombTexture){
+        this.bombTexture = bombTexture;
+    }
+
+    public void Hit(){
         this.isShotStart = false;
 
         GraphicUtil.drawTexture(gl, x, y, 0.3f, 0.3f, bombTexture, 1.0f, 1.0f, 1.0f, 1.0f);

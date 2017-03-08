@@ -45,6 +45,7 @@ public class EnemyManager {
                 enemies[i].setGraphic(gl, enemy3);
             }
             enemies[i].getShot().setGraphic(gl, shot);
+            enemies[i].getShot().setBombTexture(bombTexture);
 
         }
         this.bombTexture = bombTexture;
@@ -81,6 +82,22 @@ public class EnemyManager {
         return  false;
     }
 
+    /**
+     *
+     * @param x 自機のx, y座標
+     * @param y
+     * @return
+     */
+    public boolean isEnemyShotPointInsite(float x, float y) {
+        for (int i = 0; i < TARGET_NUM; i++) {
+
+            if (enemies[i].getShot().isPointInside(x, y)) {
+                enemies[i].getShot().Hit();
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 被弾
@@ -100,7 +117,7 @@ public class EnemyManager {
             if (enemies[i].isPointInside(x, y)) {
                 // enemies　フェードアウト
                 enemies[i].died();
-                shot.Hit(this.bombTexture);
+                shot.Hit();
 
                 //後ろのやつが弾を撃てるように
                 if(i  + 6 < TARGET_NUM){

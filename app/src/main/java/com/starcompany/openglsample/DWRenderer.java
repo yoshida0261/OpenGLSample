@@ -78,6 +78,7 @@ public class DWRenderer {
         }
         droid.setGraphic(gl, this.droidTexture);
         droid.getShot().setGraphic(gl, this.shotTexture);
+        droid.getShot().setBombTexture(this.bombTexture);
 
     }
 
@@ -147,23 +148,52 @@ public class DWRenderer {
      */
     public void isShotPointInside(float x, float y)
     {
+        isDroidShotPointInside(x,y);
+        isEnemyShotPointInside(x,y);
+
+        if(enemmyManager.isEnemyShotPointInsite(droid.getX(), droid.getY()) == true){
+            gameOver();
+        }
+    }
+
+    private void isDroidShotPointInside(float x, float y)
+    {
         Shot shot = droid.getShot();
 
         for(int i=0; i< BLOCK_NUM; i++){
-            if (shot.isShotState() == true && blocks[i].isPointInside(x, y)) {
+            if (shot.isShotState() == true && blocks[i].isPointInside(x, y) == true) {
 
                 // blocks　３回位で消えるようにする（予定）
                 blocks[i].breake(this.blockBreakTexture);
-
-                shot.Hit(this.bombTexture);
+                shot.Hit();
                 //壁を壊したからそこまで
                 return;
             }
+
         }
         if(enemmyManager.isShotPointInsite(shot,x,y) == true){
             score+=10;
         }
+
     }
+
+    private void isEnemyShotPointInside(float x, float y){
+
+        for(int i=0; i< BLOCK_NUM; i++){
+            if (enemmyManager.isEnemyShotPointInsite(blocks[i].x, blocks[i].y)) {
+
+                // blocks　３回位で消えるようにする（予定）
+                blocks[i].breake(this.blockBreakTexture);
+
+                //shot.Hit(this.bombTexture);
+                //壁を壊したからそこまで
+                return;
+            }
+
+        }
+
+    }
+
 
     public void isDroidPointInside(){
         float x = droid.getX();

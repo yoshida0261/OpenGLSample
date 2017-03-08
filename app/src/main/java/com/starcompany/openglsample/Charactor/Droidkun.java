@@ -14,6 +14,9 @@ public class Droidkun  extends Charactor {
     public float getX(){
         return  x;
     }
+    public float getY(){
+        return  y -0.2f;
+    }
 
     public Droidkun(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
