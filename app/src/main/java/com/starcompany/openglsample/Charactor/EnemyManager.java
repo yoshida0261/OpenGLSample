@@ -98,8 +98,6 @@ public class EnemyManager {
 
             if (enemies[i].isPointInside(x, y)) {
                 // enemies　フェードアウト
-                enemies[i].x = 3.0f;
-                enemies[i].y = 3.0f;
                 enemies[i].died();
                 shot.Hit(this.bombTexture);
 

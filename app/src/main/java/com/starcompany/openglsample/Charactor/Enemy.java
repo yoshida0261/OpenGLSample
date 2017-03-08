@@ -15,6 +15,9 @@ public class Enemy extends Charactor {
 
     private boolean dead = false;
     public void died(){
+        x = 3.0f;
+        y = 3.0f;
+
         front = false;
         dead = true;
     }//死んだ

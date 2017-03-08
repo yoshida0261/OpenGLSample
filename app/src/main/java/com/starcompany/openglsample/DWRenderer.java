@@ -46,6 +46,8 @@ public class DWRenderer {
 
     private int droidTexture;
     private int blockTexture;
+    private int blockBreakTexture;
+
     private int ufoTexture;
     private int ufoTexture2;
     private int shotTexture;
@@ -87,6 +89,8 @@ public class DWRenderer {
         this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
         this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.mydroid);
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
+        this.blockBreakTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block_break);
+
         this.shotTexture = GraphicUtil.loadTexture(gl, res, shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
         this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
@@ -149,8 +153,7 @@ public class DWRenderer {
             if (shot.isShotState() == true && blocks[i].isPointInside(x, y)) {
 
                 // blocks　３回位で消えるようにする（予定）
-                blocks[i].x = 3.0f;
-                blocks[i].y = 3.0f;
+                blocks[i].breake(this.blockBreakTexture);
 
                 shot.Hit(this.bombTexture);
                 //壁を壊したからそこまで
