@@ -50,6 +50,7 @@ public class DWRenderer {
 
     private int ufoTexture;
     private int ufoTexture2;
+    private int ufoBombTexture;
     private int shotTexture;
     private int numberTexture;
     private int gameOverTexture;//ゲームオーバー用テクスチャ
@@ -73,6 +74,7 @@ public class DWRenderer {
     public void setGraphicTexture(){
 
         enemmyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture,  this.shotTexture);
+        enemmyManager.setUfoGraphicTexture(this.ufoTexture, this.ufoTexture2, this.ufoBombTexture);
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].setGraphic(gl, this.blockTexture);
         }
@@ -87,6 +89,10 @@ public class DWRenderer {
         this.enemyTexture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line1);
         this.enemy2Texture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line2);
         this.enemy3Texture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line3);
+        this.ufoTexture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_apple);
+        this.ufoTexture2 = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_windows);
+        this.ufoBombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.ufo_bomb);
+
         this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
         this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.mydroid);
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
@@ -95,6 +101,7 @@ public class DWRenderer {
         this.shotTexture = GraphicUtil.loadTexture(gl, res, shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
         this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
+
         this.gameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
     }
 
@@ -126,7 +133,6 @@ public class DWRenderer {
         if(enemmyManager.isGameClear() == true){
             gameClear();
         }
-        // todo enemis.shot
 
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].draw();
@@ -156,6 +162,11 @@ public class DWRenderer {
         }
     }
 
+    /**
+     * droidくんが撃った玉の当たり判定
+     * @param x
+     * @param y
+     */
     private void isDroidShotPointInside(float x, float y)
     {
         Shot shot = droid.getShot();
@@ -163,13 +174,11 @@ public class DWRenderer {
         for(int i=0; i< BLOCK_NUM; i++){
             if (shot.isShotState() == true && blocks[i].isPointInside(x, y) == true) {
 
-                // blocks　３回位で消えるようにする（予定）
+                //壁を壊すまで
                 blocks[i].breake(this.blockBreakTexture);
                 shot.Hit();
-                //壁を壊したからそこまで
                 return;
             }
-
         }
         if(enemmyManager.isShotPointInsite(shot,x,y) == true){
             score+=10;
@@ -177,21 +186,20 @@ public class DWRenderer {
 
     }
 
+    /**
+     * テキの弾の当たり判定
+     * @param x
+     * @param y
+     */
     private void isEnemyShotPointInside(float x, float y){
 
         for(int i=0; i< BLOCK_NUM; i++){
             if (enemmyManager.isEnemyShotPointInsite(blocks[i].x, blocks[i].y)) {
 
-                // blocks　３回位で消えるようにする（予定）
                 blocks[i].breake(this.blockBreakTexture);
-
-                //shot.Hit(this.bombTexture);
-                //壁を壊したからそこまで
                 return;
             }
-
         }
-
     }
 
 
@@ -211,7 +219,7 @@ public class DWRenderer {
     private void maxScore(){
         //前回のスコアを取得
         //最高スコアなら更新
-        //dbに格納するのは気が向いたら
+
     }
 
     private void timeOver(){

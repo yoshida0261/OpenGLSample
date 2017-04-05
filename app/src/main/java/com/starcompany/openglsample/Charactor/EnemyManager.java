@@ -8,6 +8,8 @@ public class EnemyManager {
 
     private int bombTexture;
     private Enemy[] enemies = new Enemy[TARGET_NUM];
+    private Ufo apple;
+    private Ufo windows;
 
     public void initializeCharacter(){
         float posY = 0.7f;
@@ -15,7 +17,6 @@ public class EnemyManager {
 
         for (int i = 0; i < TARGET_NUM; i++) {
             float posX = -0.8f +(0.22f * count);
-
 
             if( (i  >= 3  && i <6 ) || (i >= 9 && i < 12 )|| (i >= 15 && i < 18)){
                 posX += 0.33f;
@@ -32,6 +33,10 @@ public class EnemyManager {
                 posY += 0.21;
             }
         }
+        //表示位置は右端
+        apple = new Ufo(1.2f, 1.0f, 0.2f, 0.2f, 0.02f, 0);
+        windows = new Ufo(1.2f, 0.9f, 0.2f, 0.2f, 0.02f, 0);
+
     }
 
     public void setGraphicTexture(int enemy1, int enemy2, int enemy3, int bombTexture, int shot)
@@ -49,6 +54,12 @@ public class EnemyManager {
 
         }
         this.bombTexture = bombTexture;
+    }
+    private int ufoBombTexture;
+    public void setUfoGraphicTexture(int apple, int windows, int bomb){
+        this.apple.setGraphic(gl, apple);
+        this.windows.setGraphic(gl, windows);
+        this.ufoBombTexture = bomb;
     }
 
     /**
@@ -83,7 +94,7 @@ public class EnemyManager {
     }
 
     /**
-     *
+     *　弾があたったかの判定
      * @param x 自機のx, y座標
      * @param y
      * @return
@@ -115,11 +126,10 @@ public class EnemyManager {
         for (int i = 0; i < TARGET_NUM; i++) {
 
             if (enemies[i].isPointInside(x, y)) {
-                // enemies　フェードアウト
                 enemies[i].died();
                 shot.Hit();
 
-                //後ろのやつが弾を撃てるように
+
                 if(i  + 6 < TARGET_NUM){
                     int frontPos = i+6;
                     enemies[frontPos].setFront();
@@ -128,8 +138,24 @@ public class EnemyManager {
                 return true;
             }
         }
+
+        if(apple.isPointInside(x,y)){
+            apple.died();
+            shot.setBombTexture(this.ufoBombTexture);
+            shot.Hit();
+            return  true;
+        }
+        if(windows.isPointInside(x,y)){
+            windows.died();
+            shot.setBombTexture(this.ufoBombTexture);
+            shot.Hit();
+            return true;
+        }
+
         return false;
     }
+
+
 
     /**
      * ドロイド君とぶつかったか
@@ -149,6 +175,8 @@ public class EnemyManager {
 
     private int wait = 0;
 
+    private boolean apple_start = false;
+    private boolean windows_start = false;
     /**
      * 移動の実行
      * 左から右、　右から左へ
@@ -174,6 +202,17 @@ public class EnemyManager {
                 enemies[i].attack();
             }
         }
+
+        if(apple_start){
+            apple.move();
+            apple.draw();
+        }
+        if(windows_start){
+            windows.move();
+            windows.draw();
+        }
+
+
         if(lineFeed == false){
             return;
         }
@@ -182,15 +221,16 @@ public class EnemyManager {
         }
 
 
-
-        //弾発射のwait todo
-/*
-        wait++;
-        if(wait < 30){
-            return;
+        if(apple_start){
+            windows_start = true;
         }
-        wait = 0;
-*/
+
+        apple_start = true;
+
+
+
+
+
     }
 
 }

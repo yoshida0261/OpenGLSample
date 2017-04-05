@@ -5,7 +5,7 @@ import com.starcompany.openglsample.GraphicUtil;
 public class Shot extends Charactor{
     private static final String TAG = Shot.class.getSimpleName();
 
-    private float enemyType = -0.03f;
+    private float enemyType = -0.015f;
     private float droidType = 0.03f;
     private boolean isShotStart = false;
     private float shotType;

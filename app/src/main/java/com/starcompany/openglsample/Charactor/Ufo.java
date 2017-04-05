@@ -9,20 +9,37 @@ public class Ufo extends Charactor {
         super(x, y, angle, size, speed, turnAngle);
     }
 
+    private boolean dead = false;
+    public void died(){
+        x = 3.0f;
+        y = 3.0f;
+       dead = true;
+    }//死んだ
+    public boolean isDie(){
+        return dead;
+    }
+
+
     /**
      * 右端から左端へ移動する
      */
     @Override
     public void move() {
-        this.x = this.x - 0.01f;
-        if (this.x <= -2.0f) this.x += 4.0f;
+
+        if(dead == false){
+            this.x = this.x - 0.014f;
+
+        }
+        if (this.x <= -2.0f) {
+            died();
+        }
     }
 
 
     @Override
     public void draw() {
 
-        GraphicUtil.drawTexture(gl, 0.0f, 1.0f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
+        GraphicUtil.drawTexture(gl, x, y, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
 
     }
 }

@@ -23,17 +23,18 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //全画面設定
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         DWGlobal.mainActivity = this;
 
+        //surfaceViewからtouchを受け取れるようにする
         this.droidWars = new DroidWars(this);
         DWGLSurfaceView glSurfaceView = new DWGLSurfaceView(this);
         glSurfaceView.setRenderer(droidWars);
         setContentView(glSurfaceView);
-
 
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -45,8 +46,6 @@ public class MainActivity extends Activity {
         this.mRetryButton.setText("Retry");
         hideRetryButton();//非表示にする
         addContentView(mRetryButton, params);
-
-
 
 
         this.mRetryButton.setOnClickListener(new Button.OnClickListener(){
@@ -69,7 +68,6 @@ public class MainActivity extends Activity {
     }
 
     //リトライボタンを表示する
-
     public void showRetryButton() {
        mRetryButton.setVisibility(View.VISIBLE);
     }

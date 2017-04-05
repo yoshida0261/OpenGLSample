@@ -1,14 +1,19 @@
 package com.starcompany.openglsample.Charactor;
 
+import com.starcompany.openglsample.DWGlobal;
 import com.starcompany.openglsample.GraphicUtil;
+
+import java.util.Random;
 
 public class Enemy extends Charactor {
     private static final String TAG = Enemy.class.getSimpleName();
     private Shot shot = null;
+    private Random rand;
 
     public Enemy(float x, float y, float angle, float size, float speed, float turnAngle) {
         super(x,y,angle,size,speed,turnAngle);
         shot = new Shot(x,y,angle, size, speed, turnAngle);
+        rand = DWGlobal.rand;
 
     }
 
@@ -95,13 +100,27 @@ public class Enemy extends Charactor {
         gl.glPopMatrix();
     }
 
+    private int attackWait = 0;
+
     public void attack(){
         if(shot.isShotState() == false) {
-            shot.enemyShot(x, y);
+            if(rand.nextInt(200)==0){
+                shot.enemyShot(x, y);
 
+            }
+            /*
+            attackWait++;
+            if(attackWait<120){
+                return;
+            }
+            attackWait=0;
+            shot.enemyShot(x, y);
+*/
         }
-        shot.move();
-        shot.draw();
+        if(shot.isShotState()) {
+            shot.move();
+            shot.draw();
+        }
 
     }
 

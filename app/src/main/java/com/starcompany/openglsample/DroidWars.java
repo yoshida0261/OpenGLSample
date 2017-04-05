@@ -53,6 +53,7 @@ public class DroidWars implements  GLSurfaceView.Renderer{
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        //画面領域の設定
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
@@ -60,11 +61,11 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
 
+        //
         //gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        //GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, bgTexture, 1.0f, 1.0f, 1.0f, 1.0f);
         this.renderer.renderMain();
         Shot shot = this.droid.getShot();
 
