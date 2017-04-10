@@ -5,7 +5,8 @@ import javax.microedition.khronos.opengles.GL10;
 public abstract  class Charactor {
     private static final String TAG = Charactor.class.getSimpleName();
     public float angle;
-    public float x, y;
+    public float x;
+    public float y;
     public float size;
     public float speed;
     public float turnAngle;

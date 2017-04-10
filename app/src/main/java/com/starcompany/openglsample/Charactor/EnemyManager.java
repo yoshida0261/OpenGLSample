@@ -99,7 +99,7 @@ public class EnemyManager {
      * @param y
      * @return
      */
-    public boolean isEnemyShotPointInsite(float x, float y) {
+    public boolean isEnemyShotPointInside(float x, float y) {
         for (int i = 0; i < TARGET_NUM; i++) {
 
             if (enemies[i].getShot().isPointInside(x, y)) {
@@ -117,7 +117,7 @@ public class EnemyManager {
      * @param y
      * @return
      */
-    public boolean isShotPointInsite(Shot shot, float x, float y){
+    public boolean isShotPointInside(Shot shot, float x, float y){
 
         if(shot.isShotState() == false){
             return false;
@@ -128,6 +128,7 @@ public class EnemyManager {
             if (enemies[i].isPointInside(x, y)) {
                 enemies[i].died();
                 shot.Hit();
+                shot.setFinal(true);
 
 
                 if(i  + 6 < TARGET_NUM){
@@ -143,12 +144,14 @@ public class EnemyManager {
             apple.died();
             shot.setBombTexture(this.ufoBombTexture);
             shot.Hit();
+            shot.setFinal(true);
             return  true;
         }
         if(windows.isPointInside(x,y)){
             windows.died();
             shot.setBombTexture(this.ufoBombTexture);
             shot.Hit();
+            shot.setFinal(true);
             return true;
         }
 

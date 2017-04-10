@@ -35,13 +35,13 @@ public class Droidkun  extends Charactor {
 
         if(moveX < 0){
             this.x = this.x - 0.01f;
-            if(moveX > this.x){
+            if(moveX >= this.x){
                 moveX = 0.0f;
             }
 
         }else if(moveX > 0){
             this.x = this.x + 0.01f;
-            if(moveX < this.x){
+            if(moveX <= this.x){
                 moveX = 0.0f;
             }
 
@@ -57,19 +57,6 @@ public class Droidkun  extends Charactor {
     public void draw() {
 
         GraphicUtil.drawTexture(gl, x, -1.2f, 0.2f, 0.2f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
-
-
-        /*
-        gl.glPushMatrix();
-        {
-            GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 3.0f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
-            gl.glTranslatef(x, y, 0.0f);
-            gl.glRotatef(angle, 0.0f, 0.0f, 1.0f);
-            gl.glScalef(1.0f, 1.0f, 1.0f);
-
-        }
-        gl.glPopMatrix();
-*/
     }
 
     /**
@@ -83,8 +70,18 @@ public class Droidkun  extends Charactor {
         return shot.isPointInside(x,y);
     }
 
+    private boolean isAttack(){
+
+        return shot.isFinal();
+    }
+
     public void attack(){
-        shot.droidShot(x,y);
+        if(isAttack()) {
+            shot.setFinal(false);
+            return;
+        }
+        shot.droidShot(x, y);
+
     }
 
     public Shot getShot()
