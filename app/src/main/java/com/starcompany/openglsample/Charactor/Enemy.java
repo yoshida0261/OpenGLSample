@@ -103,25 +103,19 @@ public class Enemy extends Charactor {
     private int attackWait = 0;
 
     public void attack(){
+
+/*
         if(shot.isShotState() == false) {
             if(rand.nextInt(200)==0){
                 shot.enemyShot(x, y);
 
             }
-            /*
-            attackWait++;
-            if(attackWait<120){
-                return;
-            }
-            attackWait=0;
-            shot.enemyShot(x, y);
-*/
         }
         if(shot.isShotState()) {
             shot.move();
             shot.draw();
         }
-
+*/
     }
 
 

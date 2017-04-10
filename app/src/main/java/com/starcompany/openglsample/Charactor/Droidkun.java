@@ -82,6 +82,7 @@ public class Droidkun  extends Charactor {
         }
         shot.droidShot(x, y);
 
+
     }
 
     public Shot getShot()

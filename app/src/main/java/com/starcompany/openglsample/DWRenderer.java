@@ -156,8 +156,6 @@ public class DWRenderer {
     {
         isDroidShotPointInside(x,y);
         isEnemyShotPointInside(x,y);
-        isWorldPointInside(x,y);
-
         if(enemmyManager.isEnemyShotPointInside(droid.getX(), droid.getY()) == true){
             gameOver();
         }
@@ -178,22 +176,20 @@ public class DWRenderer {
                 //壁を壊すまで
                 blocks[i].breake(this.blockBreakTexture);
                 shot.Hit();
-                shot.setFinal(true);
                 return;
             }
         }
         if(enemmyManager.isShotPointInside(shot,x,y) == true){
             score+=10;
-            shot.setFinal(true);
         }
 
     }
 
-    private void isWorldPointInside(float x, float y) {
-        Shot shot = droid.getShot();
-        if (shot.getY() > 0 && shot.getY() < 1.0) {
-            shot.setFinal(true);
+    public boolean isNextShotStart(float y) {
+        if (y > -1.0 && y < 1.0) {
+            return true;
         }
+        return false;
     }
 
     /**
@@ -216,7 +212,7 @@ public class DWRenderer {
     public void isDroidPointInside(){
         float x = droid.getX();
 
-        if(enemmyManager.isDroidPointInsite(x) == true){
+        if(enemmyManager.isDroidPointInside(x) == true){
             gameOver();
         }
     }

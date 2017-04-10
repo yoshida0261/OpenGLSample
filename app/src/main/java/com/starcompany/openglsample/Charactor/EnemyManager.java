@@ -128,7 +128,7 @@ public class EnemyManager {
             if (enemies[i].isPointInside(x, y)) {
                 enemies[i].died();
                 shot.Hit();
-                shot.setFinal(true);
+                //shot.setFinal(true);
 
 
                 if(i  + 6 < TARGET_NUM){
@@ -144,14 +144,14 @@ public class EnemyManager {
             apple.died();
             shot.setBombTexture(this.ufoBombTexture);
             shot.Hit();
-            shot.setFinal(true);
+           // shot.setFinal(true);
             return  true;
         }
         if(windows.isPointInside(x,y)){
             windows.died();
             shot.setBombTexture(this.ufoBombTexture);
             shot.Hit();
-            shot.setFinal(true);
+           // shot.setFinal(true);
             return true;
         }
 
@@ -165,7 +165,7 @@ public class EnemyManager {
      * @param x
      * @return
      */
-    public boolean isDroidPointInsite(float x)
+    public boolean isDroidPointInside(float x)
     {
         for (int i = 0; i < TARGET_NUM; i++) {
             if (enemies[i].isPointInside(x, -1.2f)) {

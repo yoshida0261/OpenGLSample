@@ -70,7 +70,11 @@ public class DroidWars implements  GLSurfaceView.Renderer{
         Shot shot = this.droid.getShot();
 
         this.renderer.isShotPointInside(shot.getX(), shot.getY());
-      //  this.renderer.isDroidPointInside();
+        if(this.renderer.isNextShotStart(shot.getY())){
+            shot.setFinal(true);
+        }
+
+        //  this.renderer.isDroidPointInside();
     }
 
 
