@@ -186,7 +186,7 @@ public class DWRenderer {
     }
 
     public boolean isNextShotStart(float y) {
-        if (y > -1.0 && y < 1.0) {
+        if (y > -1.2 && y < 1.2) {
             return true;
         }
         return false;
