@@ -104,7 +104,6 @@ public class Enemy extends Charactor {
 
     public void attack(){
 
-/*
         if(shot.isShotState() == false) {
             if(rand.nextInt(200)==0){
                 shot.enemyShot(x, y);
@@ -115,7 +114,6 @@ public class Enemy extends Charactor {
             shot.move();
             shot.draw();
         }
-*/
     }
 
 
