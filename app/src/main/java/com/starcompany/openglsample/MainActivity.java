@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
 
 
     private Button mRetryButton;//リトライボタン
-    private DroidWars droidWars;
+    private DWRenderer droidWars;
     private long mPauseTime = 0L;
 
     @Override
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
         DWGlobal.mainActivity = this;
 
         //surfaceViewからtouchを受け取れるようにする
-        this.droidWars = new DroidWars(this);
+        this.droidWars = new DWRenderer(this);
         DWGLSurfaceView glSurfaceView = new DWGLSurfaceView(this);
         glSurfaceView.setRenderer(droidWars);
         setContentView(glSurfaceView);

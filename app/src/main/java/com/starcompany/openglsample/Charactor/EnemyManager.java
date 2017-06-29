@@ -1,7 +1,7 @@
 package com.starcompany.openglsample.Charactor;
 
 import static com.starcompany.openglsample.DWGlobal.gl;
-import static com.starcompany.openglsample.DroidWars.TARGET_NUM;
+import static com.starcompany.openglsample.DWRenderer.TARGET_NUM;
 
 public class EnemyManager {
     private static final String TAG = EnemyManager.class.getSimpleName();

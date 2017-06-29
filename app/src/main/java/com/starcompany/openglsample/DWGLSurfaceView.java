@@ -10,7 +10,7 @@ public class DWGLSurfaceView extends GLSurfaceView{
     private float width;
     private float height;
 
-    private DroidWars mMyRenderer;
+    private DWRenderer mMyRenderer;
 
     public DWGLSurfaceView(Context context) {
         super(context);
@@ -20,7 +20,7 @@ public class DWGLSurfaceView extends GLSurfaceView{
     @Override
     public void setRenderer(Renderer renderer) {
         super.setRenderer(renderer);
-        this.mMyRenderer = (DroidWars)renderer;
+        this.mMyRenderer = (DWRenderer)renderer;
     }
 
     @Override
@@ -35,10 +35,6 @@ public class DWGLSurfaceView extends GLSurfaceView{
         float x = (event.getX() / (float) width) * 2.0f - 1.0f;
         float y = (event.getY() / (float) height) * -3.0f + 1.5f;
         mMyRenderer.touched(x, y);
-
-        // 導入してみたが、死ぬので保留
-        //Vibrator vibrator = (Vibrator) DWGlobal.mainActivity.getSystemService(VIBRATOR_SERVICE);
-        //vibrator.vibrate(10);
 
         return false;
     }
