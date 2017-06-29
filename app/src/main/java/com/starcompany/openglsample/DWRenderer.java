@@ -2,7 +2,6 @@ package com.starcompany.openglsample;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.os.Handler;
 import android.util.Log;
 
 import com.starcompany.openglsample.Charactor.Block;
