@@ -60,10 +60,8 @@ public class MainActivity extends Activity {
         if (savedInstanceState != null) {
             long startTime = savedInstanceState.getLong("startTime");
             long pauseTime = savedInstanceState.getLong("pauseTime");
-            int score = savedInstanceState.getInt("score");
             long pausedTime = pauseTime - startTime;
             droidWars.subtractPausedTime(-pausedTime);
-            droidWars.setScore(score);
         }
     }
 

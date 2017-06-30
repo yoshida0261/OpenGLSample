@@ -4,9 +4,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
-import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
-import com.starcompany.openglsample.Charactor.Enemy;
 import com.starcompany.openglsample.Charactor.Shot;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -17,14 +15,11 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     private static final String TAG = DWRenderer.class.getSimpleName();
     public static final int TARGET_NUM = 18;
     public static final int BLOCK_NUM = 4;
-    private static final int GAME_INTERVAL = 60;
     private Context context;
     private int width;
     private int height;
 
-    private Enemy[] enemies = null;
     private Droidkun droid = null;
-    private Block[] blocks = null;
 
     private DroidWar droidWar;
 
@@ -42,8 +37,6 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         this.droidWar = new DroidWar();
         this.droidWar.initializeCharacter();
         droid = this.droidWar.getDroidInstance();
-        enemies = this.droidWar.getEnemyInstance();
-        blocks = this.droidWar.getBlocksInstance();
 
     }
 
@@ -100,11 +93,6 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
     public long getStartTime() {
         return startTime;
-    }
-
-
-    public void setScore(int score) {
-        score = score;
     }
 }
  

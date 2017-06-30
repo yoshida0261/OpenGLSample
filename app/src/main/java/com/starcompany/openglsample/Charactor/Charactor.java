@@ -13,6 +13,11 @@ public abstract  class Charactor {
     public GL10  gl;
     public int   texture;
 
+
+    public Charactor(){
+
+    }
+
     public Charactor(float x, float y, float angle, float size, float speed, float turnAngle) {
         this.x = x;
         this.y = y;
