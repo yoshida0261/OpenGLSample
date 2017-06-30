@@ -26,7 +26,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     private Droidkun droid = null;
     private Block[] blocks = null;
 
-    private DroidWar renderer;
+    private DroidWar droidWar;
 
     private long startTime;
     private boolean gameOverFlag;
@@ -39,11 +39,11 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     public void startNewGame() {
         this.startTime = System.currentTimeMillis();
         this.gameOverFlag = false;
-        this.renderer = new DroidWar();
-        this.renderer.initializeCharacter();
-        droid = this.renderer.getDroidInstance();
-        enemies = this.renderer.getEnemyInstance();
-        blocks = this.renderer.getBlocksInstance();
+        this.droidWar = new DroidWar();
+        this.droidWar.initializeCharacter();
+        droid = this.droidWar.getDroidInstance();
+        enemies = this.droidWar.getEnemyInstance();
+        blocks = this.droidWar.getBlocksInstance();
 
     }
 
@@ -60,18 +60,12 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        this.renderer.renderMain();
+        this.droidWar.renderMain();
         Shot shot = this.droid.getShot();
 
-        this.renderer.isShotPointInside(shot.getX(), shot.getY());
+        this.droidWar.isShotPointInside(shot.getX(), shot.getY());
 
-        shot.setFinal(this.renderer.isNextShotStart(shot.getY()));
-        /*
-        if(this.renderer.isNextShotStart(shot.getY())){
-            shot.setFinal(true);
-        }*/
-
-        //  this.renderer.isDroidPointInside();
+        shot.setFinal(this.droidWar.isNextShotStart(shot.getY()));
     }
 
 
@@ -80,8 +74,8 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         this.width = width;
         this.height = height;
         DWGlobal.gl = gl;
-        this.renderer.loadTextures(gl, this.context);
-        this.renderer.setGraphicTexture();
+        this.droidWar.loadTextures(gl, this.context);
+        this.droidWar.setGraphicTexture();
     }
 
     @Override

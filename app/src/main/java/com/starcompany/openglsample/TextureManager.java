@@ -15,6 +15,7 @@ public class TextureManager {
         mTextures.put(resId, texId);
     }
     public static final void deleteTexture(GL10 gl, int resId) {
+
         if (mTextures.containsKey(resId)) {
             int[] texId = new int[1];
             texId[0] = mTextures.get(resId);
