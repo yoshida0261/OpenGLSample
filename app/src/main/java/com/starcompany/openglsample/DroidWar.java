@@ -5,7 +5,6 @@ import android.content.res.Resources;
 
 import com.starcompany.openglsample.Charactor.Block;
 import com.starcompany.openglsample.Charactor.Droidkun;
-import com.starcompany.openglsample.Charactor.Enemy;
 import com.starcompany.openglsample.Charactor.EnemyManager;
 import com.starcompany.openglsample.Charactor.Shot;
 
@@ -13,7 +12,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import static com.starcompany.openglsample.DWGlobal.gl;
 import static com.starcompany.openglsample.DWRenderer.BLOCK_NUM;
-import static com.starcompany.openglsample.DWRenderer.TARGET_NUM;
 import static com.starcompany.openglsample.R.drawable.shot;
 
 public class DroidWar {
@@ -21,25 +19,11 @@ public class DroidWar {
 
     private Droidkun droid;
     private int score;
-    private Enemy[] enemies = new Enemy[TARGET_NUM];
     private EnemyManager enemyManager = new EnemyManager();
     private Block[] blocks = new Block[BLOCK_NUM];
-
-    public Droidkun getDroidInstance(){
-        return  droid;
-    }
-
-    public Enemy[] getEnemyInstance(){
-        return enemies;
-    }
-
-    public Block[] getBlocksInstance(){
-        return blocks;
-    }
     private int enemyTexture;
     private int enemy2Texture;
     private int enemy3Texture;
-
 
     private int droidTexture;
     private int blockTexture;
