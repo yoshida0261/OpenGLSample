@@ -22,7 +22,7 @@ public class DroidWar {
     private Droidkun droid;
     private int score;
     private Enemy[] enemies = new Enemy[TARGET_NUM];
-    private EnemyManager enemmyManager = new EnemyManager();
+    private EnemyManager enemyManager = new EnemyManager();
     private Block[] blocks = new Block[BLOCK_NUM];
 
     public Droidkun getDroidInstance(){
@@ -36,9 +36,6 @@ public class DroidWar {
     public Block[] getBlocksInstance(){
         return blocks;
     }
-
-
-    private int bgTexture;
     private int enemyTexture;
     private int enemy2Texture;
     private int enemy3Texture;
@@ -62,7 +59,7 @@ public class DroidWar {
     {
         // drawでy座標を固定描画しているのでここでの変更は無意味
         droid = new Droidkun(0, -0.9f, 0f, 0.5f, 0.02f, 0);
-        enemmyManager.initializeCharacter();;
+        enemyManager.initializeCharacter();;
         blocks[0] = new Block(-0.7f, -0.8f, 0, 0.3f, 0.02f, 0);
         blocks[1] = new Block(-0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
         blocks[2] = new Block( 0.3f, -0.8f, 0, 0.3f, 0.02f, 0);
@@ -73,8 +70,8 @@ public class DroidWar {
 
     public void setGraphicTexture(){
 
-        enemmyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture,  this.shotTexture);
-        enemmyManager.setUfoGraphicTexture(this.ufoTexture, this.ufoTexture2, this.ufoBombTexture);
+        enemyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture,  this.shotTexture);
+        enemyManager.setUfoGraphicTexture(this.ufoTexture, this.ufoTexture2, this.ufoBombTexture);
         for (int i = 0; i < BLOCK_NUM; i++) {
             blocks[i].setGraphic(gl, this.blockTexture);
         }
@@ -93,7 +90,6 @@ public class DroidWar {
         this.ufoTexture2 = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_windows);
         this.ufoBombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.ufo_bomb);
 
-        this.bgTexture = GraphicUtil.loadTexture(gl, res, R.drawable.circuit);
         this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.mydroid);
         this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
         this.blockBreakTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block_break);
@@ -109,7 +105,7 @@ public class DroidWar {
      * 敵とぶつかるか、敵のたまとぶつかるとゲームオーバー
      */
     private void gameOver(){
-        enemmyManager.gameOver();
+        enemyManager.gameOver();
         GraphicUtil.drawTexture(gl, 0.0f, 0.0f, 2.0f, 0.5f, gameOverTexture, 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
@@ -128,9 +124,9 @@ public class DroidWar {
 
         GraphicUtil.drawNumbers(gl, -0.5f, 1.25f, 0.125f, 0.125f, numberTexture, score, 4);
 
-        enemmyManager.move();
+        enemyManager.move();
 
-        if(enemmyManager.isGameClear() == true){
+        if(enemyManager.isGameClear() == true){
             gameClear();
         }
 
@@ -156,7 +152,7 @@ public class DroidWar {
     {
         isDroidShotPointInside(x,y);
         isEnemyShotPointInside(x,y);
-        if(enemmyManager.isEnemyShotPointInside(droid.getX(), droid.getY()) == true){
+        if(enemyManager.isEnemyShotPointInside(droid.getX(), droid.getY()) == true){
             gameOver();
         }
     }
@@ -179,7 +175,7 @@ public class DroidWar {
                 return;
             }
         }
-        if(enemmyManager.isShotPointInside(shot,x,y) == true){
+        if(enemyManager.isShotPointInside(shot,x,y) == true){
             score+=10;
         }
 
@@ -200,54 +196,12 @@ public class DroidWar {
     private void isEnemyShotPointInside(float x, float y){
 
         for(int i=0; i< BLOCK_NUM; i++){
-            if (enemmyManager.isEnemyShotPointInside(blocks[i].x, blocks[i].y)) {
+            if (enemyManager.isEnemyShotPointInside(blocks[i].x, blocks[i].y)) {
 
                 blocks[i].breake(this.blockBreakTexture);
                 return;
             }
         }
     }
-
-
-    public void isDroidPointInside(){
-        float x = droid.getX();
-
-        if(enemmyManager.isDroidPointInside(x) == true){
-            gameOver();
-        }
-    }
-
-
-    private void timeCount(){
-
-    }
-
-    private void maxScore(){
-        //前回のスコアを取得
-        //最高スコアなら更新
-
-    }
-
-    private void timeOver(){
-        /*
-        TODO 後の課題
-        int passedTime = (int) (System.currentTimeMillis() - startTime) / 1000;
-        int remainTime = GAME_INTERVAL - passedTime;// 　残り時間を計算する
-        if (remainTime <= 0) {
-            remainTime = 0;// 残り時間がマイナスにならないようにする
-            if (!gameOverFlag) {
-                gameOverFlag = true;// ゲームオーバー状態にする
-                // Global.mainActivity.showRetryButton()をUIスレッド上で実行する
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        DWGlobal.mainActivity.showRetryButton();
-                    }
-                });
-            }
-        }*/
-    }
-
-
 }
  

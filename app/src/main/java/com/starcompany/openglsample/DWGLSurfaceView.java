@@ -32,8 +32,8 @@ public class DWGLSurfaceView extends GLSurfaceView{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = (event.getX() / (float) width) * 2.0f - 1.0f;
-        float y = (event.getY() / (float) height) * -3.0f + 1.5f;
+        float x = (event.getX() / width) * 2.0f - 1.0f;
+        float y = (event.getY() / height) * -3.0f + 1.5f;
         mMyRenderer.touched(x, y);
 
         return false;
