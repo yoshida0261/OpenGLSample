@@ -12,7 +12,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import static com.starcompany.openglsample.DWGlobal.gl;
 import static com.starcompany.openglsample.DWRenderer.BLOCK_NUM;
-import static com.starcompany.openglsample.R.drawable.shot;
 
 public class DroidWar {
     private static final String TAG = DroidWar.class.getSimpleName();
@@ -21,23 +20,9 @@ public class DroidWar {
     private int score;
     private EnemyManager enemyManager = new EnemyManager();
     private Block[] blocks = new Block[BLOCK_NUM];
-    private int enemyTexture;
-    private int enemy2Texture;
-    private int enemy3Texture;
-
-    private int droidTexture;
-    private int blockTexture;
     private int blockBreakTexture;
-
-    private int ufoTexture;
-    private int ufoTexture2;
-    private int ufoBombTexture;
-    private int shotTexture;
     private int numberTexture;
     private int gameOverTexture;//ゲームオーバー用テクスチャ
-    private int bombTexture;
-
-
 
     public void initializeCharacter()
     {
@@ -52,36 +37,23 @@ public class DroidWar {
 
     }
 
-    public void setGraphicTexture(){
+    public void setGraphicTexture(Resources res){
 
-        enemyManager.setGraphicTexture(this.enemyTexture, this.enemy2Texture, this.enemy3Texture, bombTexture,  this.shotTexture);
-        enemyManager.setUfoGraphicTexture(this.ufoTexture, this.ufoTexture2, this.ufoBombTexture);
+        enemyManager.setGraphicTexture(res, R.drawable.enemy_line1, R.drawable.enemy_line2, R.drawable.enemy_line3, R.drawable.bomb,  R.drawable.shot);
+        enemyManager.setUfoGraphicTexture(res, R.drawable.enemy_apple, R.drawable.enemy_windows, R.drawable.ufo_bomb);
         for (int i = 0; i < BLOCK_NUM; i++) {
-            blocks[i].setGraphic(gl, this.blockTexture);
+            blocks[i].setGraphic(gl, res, R.drawable.block);
         }
-        droid.setGraphic(gl, this.droidTexture);
-        droid.getShot().setGraphic(gl, this.shotTexture);
-        droid.getShot().setBombTexture(this.bombTexture);
+        droid.setGraphic(gl, res, R.drawable.mydroid);
+        droid.getShot().setGraphic(gl, res, R.drawable.shot);
+        droid.getShot().setBombTexture(GraphicUtil.loadTexture(gl, res, R.drawable.bomb));
 
     }
 
     public void loadTextures(GL10 gl, Context context) {
         Resources res = context.getResources();
-        this.enemyTexture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line1);
-        this.enemy2Texture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line2);
-        this.enemy3Texture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_line3);
-        this.ufoTexture = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_apple);
-        this.ufoTexture2 = GraphicUtil.loadTexture(gl, res, R.drawable.enemy_windows);
-        this.ufoBombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.ufo_bomb);
-
-        this.droidTexture = GraphicUtil.loadTexture(gl, res, R.drawable.mydroid);
-        this.blockTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block);
         this.blockBreakTexture = GraphicUtil.loadTexture(gl, res, R.drawable.block_break);
-
-        this.shotTexture = GraphicUtil.loadTexture(gl, res, shot);
         this.numberTexture = GraphicUtil.loadTexture(gl, res, R.drawable.number);
-        this.bombTexture = GraphicUtil.loadTexture(gl, res, R.drawable.bomb);
-
         this.gameOverTexture = GraphicUtil.loadTexture(gl, res, R.drawable.game_over);
     }
 
@@ -163,7 +135,7 @@ public class DroidWar {
     public void setNextShotStart() {
         Shot shot = droid.getShot();
         float y = shot.getY();
-        if (y > -0.9 && y < 1.2) {
+        if (y > 0 && y < 1.2) {
             shot.setFinal(true);
         }
         shot.setFinal(false);

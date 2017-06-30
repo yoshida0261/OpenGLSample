@@ -55,7 +55,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         this.height = height;
         DWGlobal.gl = gl;
         this.droidWar.loadTextures(gl, this.context);
-        this.droidWar.setGraphicTexture();
+        this.droidWar.setGraphicTexture(context.getResources());
     }
 
     @Override

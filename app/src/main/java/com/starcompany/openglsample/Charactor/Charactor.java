@@ -1,5 +1,9 @@
 package com.starcompany.openglsample.Charactor;
 
+import android.content.res.Resources;
+
+import com.starcompany.openglsample.GraphicUtil;
+
 import javax.microedition.khronos.opengles.GL10;
 
 public abstract  class Charactor {
@@ -28,9 +32,9 @@ public abstract  class Charactor {
 
     }
 
-    public void setGraphic(GL10 gl, int texture){
+    public void setGraphic(GL10 gl, Resources resources, int resId){
+        this.texture = GraphicUtil.loadTexture(gl, resources, resId);
         this.gl = gl;
-        this.texture = texture;
     }
 
     /**

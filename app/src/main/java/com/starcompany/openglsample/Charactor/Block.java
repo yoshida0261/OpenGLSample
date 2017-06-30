@@ -13,7 +13,7 @@ public class Block extends Charactor {
     public void breake(int texture){
         hp--;
         if(hp == 1){
-            setGraphic(gl, texture);
+            this.texture = texture;
         }
         if(hp == 0){
             x = 3.0f;

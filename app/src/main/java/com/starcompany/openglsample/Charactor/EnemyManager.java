@@ -1,12 +1,12 @@
 package com.starcompany.openglsample.Charactor;
 
+import android.content.res.Resources;
+
 import static com.starcompany.openglsample.DWGlobal.gl;
 import static com.starcompany.openglsample.DWRenderer.TARGET_NUM;
 
 public class EnemyManager {
     private static final String TAG = EnemyManager.class.getSimpleName();
-
-    private int bombTexture;
     private Enemy[] enemies = new Enemy[TARGET_NUM];
     private Ufo apple;
     private Ufo windows;
@@ -39,26 +39,26 @@ public class EnemyManager {
 
     }
 
-    public void setGraphicTexture(int enemy1, int enemy2, int enemy3, int bombTexture, int shot)
+
+    public void setGraphicTexture(Resources res, int enemy1, int enemy2, int enemy3, int bombTexture, int shot)
     {
         for (int i = 0; i < TARGET_NUM; i++) {
             if(i < 6) {
-                enemies[i].setGraphic(gl, enemy1);
+                enemies[i].setGraphic(gl, res, enemy1);
             }else if(i < 12){
-                enemies[i].setGraphic(gl, enemy2);
+                enemies[i].setGraphic(gl, res, enemy2);
             }else{
-                enemies[i].setGraphic(gl, enemy3);
+                enemies[i].setGraphic(gl, res, enemy3);
             }
-            enemies[i].getShot().setGraphic(gl, shot);
+            enemies[i].getShot().setGraphic(gl,  res, shot);
             enemies[i].getShot().setBombTexture(bombTexture);
 
         }
-        this.bombTexture = bombTexture;
     }
     private int ufoBombTexture;
-    public void setUfoGraphicTexture(int apple, int windows, int bomb){
-        this.apple.setGraphic(gl, apple);
-        this.windows.setGraphic(gl, windows);
+    public void setUfoGraphicTexture(Resources res, int apple, int windows, int bomb){
+        this.apple.setGraphic(gl, res, apple);
+        this.windows.setGraphic(gl, res, windows);
         this.ufoBombTexture = bomb;
     }
 
@@ -128,9 +128,6 @@ public class EnemyManager {
             if (enemies[i].isPointInside(x, y)) {
                 enemies[i].died();
                 shot.Hit();
-                //shot.setFinal(true);
-
-
                 if(i  + 6 < TARGET_NUM){
                     int frontPos = i+6;
                     enemies[frontPos].setFront();
@@ -144,39 +141,17 @@ public class EnemyManager {
             apple.died();
             shot.setBombTexture(this.ufoBombTexture);
             shot.Hit();
-           // shot.setFinal(true);
             return  true;
         }
         if(windows.isPointInside(x,y)){
             windows.died();
             shot.setBombTexture(this.ufoBombTexture);
             shot.Hit();
-           // shot.setFinal(true);
             return true;
         }
 
         return false;
     }
-
-
-
-    /**
-     * ドロイド君とぶつかったか
-     * @param x
-     * @return
-     */
-    public boolean isDroidPointInside(float x)
-    {
-        for (int i = 0; i < TARGET_NUM; i++) {
-            if (enemies[i].isPointInside(x, -1.2f)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private int wait = 0;
 
     private boolean apple_start = false;
     private boolean windows_start = false;
@@ -190,10 +165,6 @@ public class EnemyManager {
      * 打つかどうかはランダムにしたい。。
      */
     public void move() {
-        //Random rand = DWGlobal.rand; // randamで弾だし
-        // Enemy[] enemies = this.enemies;
-
-        // wait
         boolean lineFeed = false;
         for (int i = 0; i < TARGET_NUM; i++) {
             enemies[i].move();
