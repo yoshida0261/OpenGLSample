@@ -17,11 +17,6 @@ public class Shot extends Charactor{
         super(x, y, angle, size, speed, turnAngle);
     }
 
-
-    public boolean isconflicted(Charactor charactor) {
-        return charactor.isPointInside(x,y);
-    }
-
     public void enemyShot(float x, float y)
     {
         this.x = x;
@@ -58,11 +53,8 @@ public class Shot extends Charactor{
 
     @Override
     public void draw() {
-
-
         GraphicUtil.drawTexture(gl, x, y, 0.1f, 0.1f, texture, 1.0f, 1.0f, 1.0f, 1.0f);
 
-        //GraphicUtil.drawShot(gl,x,y);
     }
 
 
@@ -85,14 +77,11 @@ public class Shot extends Charactor{
 
     public void Hit(){
         this.isShotDrawStart = false;
-        //this.isFinal = false;
 
         GraphicUtil.drawTexture(gl, x, y, 0.3f, 0.3f, bombTexture, 1.0f, 1.0f, 1.0f, 1.0f);
 
         this.x = 3.0f;
         this.y = -3.0f;
-        //弾けるエフェクト
-        //敵、doroidはフェードアウトすること
 
     }
 

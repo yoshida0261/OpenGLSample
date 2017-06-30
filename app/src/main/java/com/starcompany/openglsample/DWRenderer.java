@@ -4,9 +4,6 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
-import com.starcompany.openglsample.Charactor.Droidkun;
-import com.starcompany.openglsample.Charactor.Shot;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -18,9 +15,6 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     private Context context;
     private int width;
     private int height;
-
-    private Droidkun droid = null;
-
     private DroidWar droidWar;
 
     private long startTime;
@@ -36,8 +30,6 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         this.gameOverFlag = false;
         this.droidWar = new DroidWar();
         this.droidWar.initializeCharacter();
-        droid = this.droidWar.getDroidInstance();
-
     }
 
     @Override
@@ -49,16 +41,13 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         gl.glOrthof(-1.0f, 1.0f, -1.5f, 1.5f, 0.5f, -0.5f);
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
-
         gl.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         this.droidWar.renderMain();
-        Shot shot = this.droid.getShot();
+        this.droidWar.isShotPointInside();
+        this.droidWar.setNextShotStart();
 
-        this.droidWar.isShotPointInside(shot.getX(), shot.getY());
-
-        shot.setFinal(this.droidWar.isNextShotStart(shot.getY()));
     }
 
 
@@ -77,14 +66,12 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
     }
 
     //画面がタッチされたときに呼ばれるメソッド
-    public void touched(float x, float y) {
-        Log.i(getClass().toString(), String.format("touched! x = %f, y = %f", x, y));
+    public void onTouched(float x, float y) {
+        Log.i(getClass().toString(), String.format("onTouched! x = %f, y = %f", x, y));
         if (gameOverFlag) {
             return;
         }
-
-        droid.attack();
-        droid.move(x);
+        this.droidWar.onTouched(x,y);
     }
 
     public void subtractPausedTime(long pausedTime) {

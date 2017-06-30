@@ -142,16 +142,11 @@ public class DroidWar {
 
     /**
      * 当たり判定
-     *
-     *
-     *
-     * @param x
-     * @param y
      */
-    public void isShotPointInside(float x, float y)
+    public void isShotPointInside()
     {
-        isDroidShotPointInside(x,y);
-        isEnemyShotPointInside(x,y);
+        isDroidShotPointInside();
+        isEnemyShotPointInside();
         if(enemyManager.isEnemyShotPointInside(droid.getX(), droid.getY()) == true){
             gameOver();
         }
@@ -159,12 +154,12 @@ public class DroidWar {
 
     /**
      * droidくんが撃った玉の当たり判定
-     * @param x
-     * @param y
      */
-    private void isDroidShotPointInside(float x, float y)
+    private void isDroidShotPointInside()
     {
         Shot shot = droid.getShot();
+        float x = shot.getX();
+        float y = shot.getY();
 
         for(int i=0; i< BLOCK_NUM; i++){
             if (shot.isShotState() == true && blocks[i].isPointInside(x, y) == true) {
@@ -181,19 +176,19 @@ public class DroidWar {
 
     }
 
-    public boolean isNextShotStart(float y) {
+    public void setNextShotStart() {
+        Shot shot = droid.getShot();
+        float y = shot.getY();
         if (y > -1.2 && y < 1.2) {
-            return true;
+            shot.setFinal(true);
         }
-        return false;
+        shot.setFinal(false);
     }
 
     /**
      * テキの弾の当たり判定
-     * @param x
-     * @param y
      */
-    private void isEnemyShotPointInside(float x, float y){
+    private void isEnemyShotPointInside(){
 
         for(int i=0; i< BLOCK_NUM; i++){
             if (enemyManager.isEnemyShotPointInside(blocks[i].x, blocks[i].y)) {
@@ -202,6 +197,12 @@ public class DroidWar {
                 return;
             }
         }
+    }
+
+    public void onTouched(float x, float y)
+    {
+        droid.attack();
+        droid.move(x);
     }
 }
  
