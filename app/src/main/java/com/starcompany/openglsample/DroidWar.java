@@ -163,7 +163,7 @@ public class DroidWar {
     public void setNextShotStart() {
         Shot shot = droid.getShot();
         float y = shot.getY();
-        if (y > -1.2 && y < 1.2) {
+        if (y > -0.9 && y < 1.2) {
             shot.setFinal(true);
         }
         shot.setFinal(false);

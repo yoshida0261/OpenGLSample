@@ -46,8 +46,6 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
 
         this.droidWar.renderMain();
         this.droidWar.isShotPointInside();
-        this.droidWar.setNextShotStart();
-
     }
 
 
@@ -71,6 +69,7 @@ public class DWRenderer implements  GLSurfaceView.Renderer{
         if (gameOverFlag) {
             return;
         }
+        this.droidWar.setNextShotStart();
         this.droidWar.onTouched(x,y);
     }
 
